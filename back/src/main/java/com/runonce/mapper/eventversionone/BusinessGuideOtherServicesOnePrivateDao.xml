@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.BusinessGuideOtherServicesOnePrivateDao">
+
+    <resultMap id="BaseResultMap" type="com.runonce.model.eventversionone.BusinessGuideOtherServicesOnePrivate" >
+        <id column="departmentalMattersId" property="departmentalMattersId" jdbcType="VARCHAR" />
+        <result column="a_implementingOrgan" property="implementingOrgan" jdbcType="VARCHAR" />
+        <result column="a_implementingBody" property="implementingBody" jdbcType="VARCHAR" />
+        <result column="a_typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace" jdbcType="VARCHAR" />
+        <result column="a_processingTime" property="processingTime" jdbcType="VARCHAR" />
+        <result column="a_placeOfProcessing" property="placeOfProcessing" jdbcType="VARCHAR" />
+        <result column="a_addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace" jdbcType="VARCHAR" />
+        <result column="a_numberOfVisitsToTheFieldHall" property="numberOfVisitsToTheFieldHall" jdbcType="VARCHAR" />
+        <result column="a_handlingForm" property="handlingForm" jdbcType="VARCHAR" />
+        <result column="a_webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem" jdbcType="VARCHAR" />
+        <result column="a_processingWindow" property="processingWindow" jdbcType="VARCHAR" />
+        <result column="a_enquiry" property="enquiry" jdbcType="VARCHAR" />
+        <result column="a_advisoryPhone" property="advisoryPhone" jdbcType="VARCHAR" />
+        <result column="a_serviceSupportHotline" property="serviceSupportHotline" jdbcType="VARCHAR" />
+        <result column="a_advisoryAddress" property="advisoryAddress" jdbcType="VARCHAR" />
+        <result column="a_complaintAddress" property="complaintAddress" jdbcType="VARCHAR" />
+        <result column="a_remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="a_state" property="state" />
+    </resultMap>
+</mapper>

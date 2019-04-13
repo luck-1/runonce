@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversiontwo.BusinessGuideOtherServicesTwoDao">
+
+    <resultMap id="BusinessGuideOtherServicesTwo" type="com.runonce.model.eventversiontwo.BusinessGuideOtherServicesTwo" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="creationTime" property="creationTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="userName" property="userName" />
+        <result column="majorTypesOfEvents" property="majorTypesOfEvents" />
+        <result column="itemSmallType" property="itemSmallType" />
+        <result column="itemCatalogue" property="itemCatalogue" />
+        <result column="basicCoding" property="basicCoding" />
+        <result column="codingImplementation" property="codingImplementation" />
+        <result column="ItemName" property="itemName" />
+        <result column="implementingOrgan" property="implementingOrgan" />
+        <result column="implementingBody" property="implementingBody" />
+        <result column="serviceObject" property="serviceObject" />
+        <result column="typeOfOffice" property="typeOfOffice" />
+        <result column="timeLimitType" property="timeLimitType" />
+        <result column="commitmenTimeLimit" property="commitmenTimeLimit" />
+        <result column="statementOfCommitmentDeadline" property="statementOfCommitmentDeadline" />
+        <result column="charge" property="charge" />
+        <result column="chargingStandard" property="chargingStandard" />
+        <result column="chargingBasis" property="chargingBasis" />
+        <result column="paymentMethod" property="paymentMethod" />
+        <result column="methodOfDeliveryOfApplicationMaterials" property="methodOfDeliveryOfApplicationMaterials" />
+        <result column="webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem" />
+        <result column="handlingForm" property="handlingForm" />
+        <result column="numberOfVisitsToTheFieldHall" property="numberOfVisitsToTheFieldHall" />
+        <result column="typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace" />
+        <result column="processingTime" property="processingTime" />
+        <result column="PlaceOfProcessing" property="placeOfProcessing" />
+        <result column="addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace" />
+        <result column="processingWindow" property="processingWindow" />
+        <result column="intermediaryService" property="intermediaryService" />
+        <result column="enquiry" property="enquiry" />
+        <result column="commonProblem" property="commonProblem" />
+        <result column="acceptingConditions" property="acceptingConditions" />
+        <result column="handlingBasis" property="handlingBasis" />
+        <result column="serviceRestrictions" property="serviceRestrictions" />
+        <result column="serviceTimeConstraint" property="serviceTimeConstraint" />
+        <result column="serviceFrequencyRestriction" property="serviceFrequencyRestriction" />
+        <result column="remarks" property="remarks" />
+        <result column="otherServiceRestrictions" property="otherServiceRestrictions" />
+        <result column="consultationApproach" property="consultationApproach" />
+        <result column="advisoryAddress" property="advisoryAddress" />
+        <result column="serviceSupportHotline" property="serviceSupportHotline" />
+        <result column="complaintChannels" property="complaintChannels" />
+        <result column="complaintAddress" property="complaintAddress" />
+        <result column="itemSequencing" property="itemSequencing" />
+        <result column="applicationMaterials" property="applicationMaterials" />
+        <result column="materialSubmissionStatement" property="materialSubmissionStatement" />
+        <result column="resultType" property="resultType" />
+        <result column="resultName" property="resultName" />
+        <result column="havaResultSample" property="havaResultSample" />
+        <result column="resultSample" property="resultSample" />
+        <result column="exerciseHierarchy" property="exerciseHierarchy" />
+    </resultMap>
+    <select id="findByEventId" parameterType="java.lang.String" resultType="com.runonce.model.eventversiontwo.BusinessGuideOtherServicesTwo">
+        SELECT
+            f_catalogue_event_type(a.majorTypesOfEvents)  as majorTypesOfEvents ,
+            f_catalogue_item_subtype(a.itemSmallType)  as itemSmallType ,
+            f_service_object(a.serviceObject)  as serviceObject ,
+            f_exercise_hierarchy(a.exerciseHierarchy)  as exerciseHierarchy ,
+            f_type_of_office(a.typeOfOffice)  as  typeOfOffice,
+            f_handling_form(a.handlingForm)  as handlingForm
+        FROM business_guide_other_services_two a
+        WHERE eventId=#{eventId,jdbcType=VARCHAR,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String" >
+        DELETE FROM  business_guide_other_services_two WHERE eventID=#{eventID}
+    </delete>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.base.SituationtoguideAndChildModelDao">
+
+    <resultMap id="SituationtoguideAndChildModel" type="com.runonce.model.base.SituationtoguideAndChildModel" >
+        <result column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="childId" property="childId" />
+    </resultMap>
+
+    <select id="findChildNameByPid" parameterType="java.lang.String" resultType="com.runonce.model.eventversionone.SituationToGuideChild">
+        SELECT stgc.* FROM situationtoguide_and_child_model AS sacm
+        INNER JOIN situation_to_guide_child stgc ON stgc.id = sacm.childId
+        WHERE sacm.pid = #{pid}
+    </select>
+
+    <delete id="deleteByPid" parameterType="java.lang.String">
+        DELETE FROM situationtoguide_and_child_model WHERE pid = #{pid}
+    </delete>
+
+    <select id="findChildByPid" parameterType="java.lang.String" resultType="com.runonce.model.eventversionone.SituationToGuideChild">
+        SELECT stgc.* FROM situation_to_guide_child AS stgc
+        INNER JOIN situationtoguide_and_child_model sacm ON sacm.childId = stgc.id
+        WHERE sacm.pid = #{pid}
+    </select>
+
+    <select id="findChildCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(*) FROM situationtoguide_and_child_model AS sacm
+        INNER JOIN situation_to_guide_child stgc ON stgc.id = sacm.childId
+        WHERE sacm.pid = #{pid}
+    </select>
+</mapper>

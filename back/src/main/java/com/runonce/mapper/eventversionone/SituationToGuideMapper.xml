@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.SituationToGuideDao">
+
+    <resultMap id="SituationToGuide" type="com.runonce.model.eventversionone.SituationToGuide" >
+        <result column="id" property="id" />
+        <result column="eventName" property="eventName" />
+        <result column="eventOfApplication" property="eventOfApplication" />
+        <collection property="keyword" ofType="java.lang.String" column="id"
+                    select="com.runonce.dao.base.SituationtoguideAndKeywordModleDao.findKeywordNameBySituationToGuideId">
+        </collection>
+        <collection property="children" ofType="com.runonce.model.eventversionone.SituationToGuideChild" column="id"
+                    select="com.runonce.dao.base.SituationtoguideAndChildModelDao.findChildNameByPid">
+        </collection>
+    </resultMap>
+
+    <select id="findByEventName" parameterType="java.lang.String" resultMap="SituationToGuide">
+        SELECT stg.* FROM situation_to_guide AS stg
+        WHERE 1 = 1
+        <if test = "eventName != null and eventName != ''">
+            AND stg.eventName LIKE concat('%',#{eventName,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+
+    <select id="findByKeyword" parameterType="java.lang.String" resultMap="SituationToGuide">
+        SELECT * FROM situation_to_guide AS stg
+        INNER JOIN situationtoguide_and_keyword_modle sakm ON sakm.situationToGuideId = stg.keyword
+        INNER JOIN keyword_table kt ON kt.id = sakm.keywordId
+        WHERE 1=1
+        <if test="kt.name != null AND kt.name!=''">
+            AND kt.name LIKE concat('%',#{keyword,jdbcType=VARCHAR,'%')
+        </if>
+    </select>
+
+    <select id="findEventNameCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(*) FROM situation_to_guide WHERE eventName = #{eventName} AND id != #{thisId}
+    </select>
+</mapper>

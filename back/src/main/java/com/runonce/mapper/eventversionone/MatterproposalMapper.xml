@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.MatterproposalDao">
+
+    <resultMap id="Matterproposal" type="com.runonce.model.eventversionone.Matterproposal">
+        <result column="id" property="id"/>
+        <result column="departmentalMattersId" property="departmentalMattersId"/>
+        <result column="sheetNum" property="sheetNum"/>
+        <result column="createTime" property="createTime"/>
+        <result column="userId" property="userId"/>
+        <result column="state" property="state"/>
+        <result column="isApproval" property="isApproval"/>
+    </resultMap>
+
+    <resultMap id="MatterProposalResultMap" type="com.runonce.model.eventversionone.Matterproposal">
+        <result column="id" property="id"/>
+        <result column="departmentalMattersId" property="departmentalMattersId"/>
+        <result column="sheetNum" property="sheetNum"/>
+        <result column="createTime" property="createTime"/>
+        <result column="userId" property="userId"/>
+        <result column="state" property="state"/>
+        <result column="isApproval" property="isApproval"/>
+        <collection property="matterProposalQuestionList"
+                    resultMap="com.runonce.dao.eventversionone.MatterProposalQuestionDao.MatterProposalQuestionResultMap">
+        </collection>
+    </resultMap>
+
+    <resultMap type="com.runonce.httpbean.assets.resbean.MatterproposalRes" id="findAllByConditionMap">
+        <result column="eventName" property="eventName"/>
+        <result column="sheetNum" property="sheetNum"/>
+        <result column="state" property="state"/>
+        <result column="propertyName" property="propertyName"/>
+        <result column="questionContent" property="questionContent"/>
+        <result column="questionState" property="questionState"/>
+        <result column="questionTime" property="questionTime"/>
+        <result column="questionerUser" property="questionerUser"/>
+        <result column="questionId" property="questionId"/>
+
+        <collection property="matterProposalAnswer" ofType="com.runonce.model.eventversionone.MatterProposalAnswer" javaType="java.util.List"
+                    select="com.runonce.dao.eventversionone.MatterProposalAnswerDao.selectMatterProposalAnswer" column="questionId">
+        </collection>
+    </resultMap>
+
+
+
+
+
+    <select id="selectByIdAndMaxCreateTime" resultType="com.runonce.model.eventversionone.Matterproposal">
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    *
+                FROM
+                    matterproposal AS m
+                WHERE
+                    m.eventId = #{departmentalMattersId}
+                  AND m.isApproval = #{isApproval}
+
+                ORDER BY
+                    createTime DESC
+            ) m
+        GROUP BY
+            m.sheetNum;
+    </select>
+
+    <!--查询审批列表详情-->
+    <select id="selectListInfo" resultMap="MatterProposalResultMap">
+        SELECT
+        mp.*,
+        mpq.*,
+        mpa.*,
+        mpq.id AS matterProposalQuestionId,
+        mpa.id AS matterProposalAnswerId
+        FROM
+        matterproposal mp
+        LEFT JOIN matter_proposal_question AS mpq ON mp.id = mpq.matterProposalId
+        LEFT JOIN (
+        SELECT
+        *
+        FROM
+        matter_proposal_answer
+        ORDER BY
+        answerTime
+
+        ) AS mpa ON mpq.id = mpa.questionId
+        WHERE 1=1
+        <if test="departmentalMattersId !=null">
+            AND mp.departmentalMattersId =#{departmentalMattersId}
+        </if>
+
+    </select>
+
+
+    <select id="selectBySheetNumAndDmId" resultMap="Matterproposal">
+
+        select *
+        from matterproposal
+        where sheetNum = #{sheetNum}
+          and departmentalMattersId = #{departmentalMattersId}
+          and isApproval=#{isApproval}
+
+    </select>
+
+
+    <select id="selectByIdAndIsApproval" resultType="com.runonce.model.eventversionone.Matterproposal">
+
+
+        SELECT
+            *
+        FROM
+            matterproposal AS m
+        WHERE
+        m.departmentalMattersId =  #{departmentalMattersId}
+        AND m.isApproval =  #{isApproval}
+        GROUP BY
+            m.sheetNum
+        ORDER
+        BY
+        m.createTime
+        DESC
+    </select>
+
+
+    <select id="findAllByCondition" parameterType="com.runonce.httpbean.assets.reqbean.MatterproposalReq"
+           resultMap="findAllByConditionMap">
+        SELECT
+        e.eventName,
+        c.sheetNum,
+        c.state,
+        a.propertyName,
+        a.questionContent,
+        a.questionState,
+        a.questionerId,
+        a.questionTime,
+        a.id AS questionId,
+        f.user_name AS questionerUser
+        FROM
+        matter_proposal_question a
+        LEFT JOIN matterproposal c ON a.matterProposalId = c.id
+        LEFT JOIN departmental_matters d ON c.departmentalMattersId = d.id
+        LEFT JOIN events_table e ON d.eventId = e.id
+        LEFT JOIN t_user f ON f.id = a.questionerId
+        WHERE
+         1=1
+        <if test="isApproval!=null">
+            AND c.isApproval=#{isApproval}
+        </if>
+        <if test="dmId!=null and dmId!=''">
+            AND d.id = #{dmId}
+        </if>
+        <if test="eventName!=null and eventName!=''">
+            AND e.eventName LIKE  CONCAT('%',#{eventName},'%')
+        </if>
+        <if test="sheetNum!=null">
+            AND c.sheetNum = #{sheetNum}
+        </if>
+        <if test="state!=null">
+            AND c.state =#{state}
+        </if>
+        <if test="propertyName!=null and propertyName!=''">
+            AND a.propertyName LIKE  CONCAT('%',#{propertyName},'%')
+        </if>
+        <if test="questionState!=null">
+            AND a.questionState = #{questionState}
+        </if>
+        <if test="questionId!=null and questionId!=''">
+            AND a.id =#{questionId}
+        </if>
+        <if test="startTime!=null and endTime==null ">
+            AND a.questionTime BETWEEN  #{startTime}
+            AND NOW()
+        </if>
+        <if test="startTime==null and endTime!=null">
+            AND a.questionTime BETWEEN NOW()
+            AND #{endTime}
+        </if>
+        <if test="startTime!=null and endTime!=null">
+            AND a.questionTime BETWEEN #{startTime}
+            AND #{endTime}
+        </if>
+
+        <if test="questionerUserName!=null and questionerUserName!='' ">
+            AND f.user_name like CONCAT('%',#{questionerUserName},'%')
+        </if>
+        ORDER BY a.questionTime
+
+    </select>
+    <select id="selectCountByIdAndIsApprovalAndState" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1) AS count
+        FROM
+        matterproposal AS m
+        WHERE
+        m.departmentalMattersId = #{departmentalMattersId}
+        AND m.isApproval =  #{isApproval}
+		AND m.state = #{state}
+    </select>
+
+
+    <select id="selectSheetState" parameterType="com.runonce.httpbean.assets.reqbean.MatterproposalReq"
+            resultMap="Matterproposal">
+
+        select *
+        from matterproposal as m
+        where m.departmentalMattersId = #{dmId}
+          and m.sheetNum = #{SheetNumber}
+          and m.isApproval=#{isApproval}
+
+    </select>
+
+
+
+    <update id="resetState" parameterType="java.lang.String">
+
+    update matterproposal set state=3 where departmentalMattersId=#{dmId}
+
+    </update>
+</mapper>

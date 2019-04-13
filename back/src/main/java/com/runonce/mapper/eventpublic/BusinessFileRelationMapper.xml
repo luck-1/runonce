@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventpublic.BusinessFileRelationDao">
+
+    <resultMap id="BusinessFileRelation" type="com.runonce.model.eventpublic.BusinessFileRelation" >
+        <result column="id" property="id" />
+        <result column="businessId" property="businessId" />
+        <result column="businessType" property="businessType" />
+        <result column="fileName" property="fileName" />
+        <result column="filePath" property="filePath" />
+    </resultMap>
+    <select id="selectByBusinessIdAndType" resultType="com.runonce.model.eventpublic.BusinessFileRelation">
+        SELECT id,businessId,businessType,fileName,filePath
+        FROM business_file_relation
+        WHERE businessId = #{businessId} and businessType = #{businessType}
+    </select>
+    <select id="selectByBusinessId" resultType="com.runonce.model.eventpublic.BusinessFileRelation">
+        SELECT id,businessId,businessType,fileName,filePath
+        FROM business_file_relation
+        WHERE businessId = #{businessId}
+    </select>
+    <select id="findFilepath" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT filePath FROM business_file_relation WHERE  businessId = #{businessId,jdbcType=VARCHAR}
+    </select>
+</mapper>

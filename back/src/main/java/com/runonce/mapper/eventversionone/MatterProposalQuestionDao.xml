@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.MatterProposalQuestionDao">
+
+    <resultMap id="MatterProposalQuestion" type="com.runonce.model.eventversionone.MatterProposalQuestion" >
+        <result column="id" property="id" />
+        <result column="matterProposalId" property="matterProposalId" />
+        <result column="questionerId" property="questionerId" />
+        <result column="questionContent" property="questionContent" />
+        <result column="questionTime" property="questionTime" />
+        <result column="questionState" property="questionState" />
+        <result column="questionDeleteState" property="questionDeleteState" />
+    </resultMap>
+
+
+
+    <resultMap id="MatterProposalQuestionResultMap" type="com.runonce.model.eventversionone.MatterProposalQuestion" >
+        <result column="matterProposalQuestionId" property="id" />
+        <result column="matterProposalId" property="matterProposalId" />
+        <result column="questionerId" property="questionerId" />
+        <result column="questionContent" property="questionContent" />
+        <result column="questionTime" property="questionTime" />
+        <result column="questionState" property="questionState" />
+        <result column="questionDeleteState" property="questionDeleteState" />
+        <collection property="matterProposalAnswerList"
+                    resultMap="com.runonce.dao.eventversionone.MatterProposalAnswerDao.MatterProposalAnswer">
+        </collection>
+    </resultMap>
+
+    <update id="updateState"   parameterType="com.runonce.httpbean.assets.reqbean.MatterProposalQuestionReq">
+
+   update matter_proposal_question set questionState = #{questionState} where id=#{id}
+
+    </update>
+
+</mapper>

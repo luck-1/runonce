@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.AuditRulesDao">
+
+    <resultMap id="AuditRules" type="com.runonce.model.eventversionone.AuditRules">
+        <result column="`id`" property="`id`"/>
+        <result column="`materialId`" property="`materialId`"/>
+        <result column="`type`" property="`type`"/>
+        <result column="`number`" property="`number`"/>
+        <result column="`content`" property="`content`"/>
+    </resultMap>
+    <delete id="deleteByMaterialId" parameterType="java.lang.String">
+        delete
+        from audit_rules
+        where materialId = #{ MaterialId,jdbcType=VARCHAR}
+
+    </delete>
+
+    <select id="selectByMaterialId"  resultMap="AuditRules">
+
+        select *
+        from audit_rules
+        where materialId = #{ MaterialId,jdbcType=VARCHAR}
+          and type = #{ type,jdbcType=INTEGER}
+
+
+    </select>
+</mapper>

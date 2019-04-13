@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.ApprovalrecordDao">
+
+    <resultMap id="Approvalrecord" type="com.runonce.model.eventversionone.Approvalrecord" >
+        <result column="`id`" property="`id`" />
+        <result column="`dmId`" property="`dmId`" />
+        <result column="`operation`" property="`operation`" />
+        <result column="`reason`" property="`reason`" />
+        <result column="`createTime`" property="`createTime`" />
+        <result column="`who`" property="`who`" />
+    </resultMap>
+</mapper>

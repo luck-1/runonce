@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.ProcessDescriptionDao">
+
+    <resultMap id="process_description" type="com.runonce.model.eventversionone.ProcessDescription" >
+        <result column="id" property="id" />
+        <result column="describetion" property="describetion" />
+        <result column="remarks" property="remarks" />
+        <result column="eventId" property="eventId" />
+        <result column="itemNumber" property="itemNumber" />
+    </resultMap>
+    <select id="findByEventId" resultType="com.runonce.model.eventversionone.ProcessDescription">
+        select * from process_description where eventId = #{eventId} order by itemNumber  asc
+    </select>
+    <delete id="deleteByEventId" parameterType="com.runonce.model.eventversionone.ProcessDescription">
+        delete  from process_description where eventId = #{eventId}
+    </delete>
+</mapper>

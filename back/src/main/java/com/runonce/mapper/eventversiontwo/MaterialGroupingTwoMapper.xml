@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversiontwo.MaterialGroupingTwoDao">
+
+    <resultMap id="MaterialGroupingTwo" type="com.runonce.model.eventversiontwo.MaterialGroupingTwo" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="type" property="type" />
+        <result column="number" property="number" />
+        <result column="io" property="io" />
+        <result column="name" property="name" />
+        <result column="originalScriptProvide" property="originalScriptProvide" />
+        <result column="copyProvide" property="copyProvide" />
+        <result column="electronicProvide" property="electronicProvide" />
+        <result column="originalScriptOutput" property="originalScriptOutput" />
+        <result column="electronicOutput" property="electronicOutput" />
+        <result column="count" property="count" />
+        <result column="provideWay" property="provideWay" />
+        <result column="remarks" property="remarks" />
+        <result column="localCity" property="localCity" />
+        <result column="nonLocalCity" property="nonLocalCity" />
+        <result column="isStreamlining" property="isStreamlining" />
+    </resultMap>
+</mapper>

@@ -1,0 +1,1058 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.DepartmentalMattersDao">
+
+    <resultMap id="departmentalMatters" type="com.runonce.model.eventversionone.DepartmentalMatters">
+        <result column="id" property="id"/>
+        <result column="deptId" property="deptId"/>
+        <result column="eventId" property="eventId"/>
+        <result column="state" property="state"/>
+    </resultMap>
+
+    <resultMap id="dealCount" type="com.runonce.model.http.DealCount">
+        <result column="allDeal" property="allDeal"/>
+        <result column="stayDeal" property="stayDeal"/>
+        <result column="accomplishDeal" property="accomplishDeal"/>
+    </resultMap>
+
+    <resultMap id="eventLevel" type="com.runonce.model.http.EventLevel">
+        <result column="provincialLevel" property="provincialLevel"/>
+        <result column="cityLevel" property="cityLevel"/>
+        <result column="countyLevel" property="countyLevel"/>
+        <result column="countyPrivateLevel" property="countyPrivateLevel"/>
+    </resultMap>
+
+    <resultMap id="DepartmentalMattersResResultMap" type="com.runonce.model.http.DepartmentalMattersRes">
+        <result column="id" property="id"/>
+        <result column="deptId" property="deptId"/>
+        <result column="deptName" property="deptName"/>
+        <result column="deptPid" property="deptPid"/>
+        <result column="eventId" property="eventId"/>
+        <result column="state" property="state"/>
+        <result column="eventName" property="eventName"/>
+        <result column="eventNumber" property="eventNumber"/>
+        <result column="eventType" property="eventType"/>
+        <result column="itemSmallType" property="itemSmallType"/>
+        <result column="eventPid" property="eventPid"/>
+        <result column="isMin" property="isMin"/>
+        <result column="eventState" property="eventState"/>
+        <result column="eventCreateTime" property="eventCreateTime"/>
+        <result column="eventUpdateTime" property="eventUpdateTime"/>
+        <result column="directoryEncoding" property="directoryEncoding"/>
+        <result column="codingImplementation" property="codingImplementation"/>
+        <result column="exerciseHierarchy" property="exerciseHierarchy"/>
+        <result column="implementingOrgan" property="implementingOrgan"/>
+        <result column="genericName" property="genericName"/>
+        <result column="directoryName" property="directoryName"/>
+        <result column="settingBasis" property="settingBasis"/>
+        <result column="remarks" property="remarks"/>
+        <result column="directorySorting" property="directorySorting"/>
+        <result column="businessGuideState" property="businessGuideState"/>
+        <result column="materialGroupingState" property="materialGroupingState"/>
+        <result column="applicationTypeState" property="applicationTypeState"/>
+        <result column="prequalificationState" property="prequalificationState"/>
+        <result column="processDescriptionState" property="processDescriptionState"/>
+        <result column="processMapState" property="processMapState"/>
+        <result column="businessSituationState" property="businessSituationState"/>
+        <result column="formThatState" property="formThatState"/>
+        <result column="presentQuantitativeState" property="presentQuantitativeState"/>
+        <result column="systemDockingState" property="systemDockingState"/>
+        <result column="serviceObject" property="serviceObject"/>
+        <!--<collection property="serviceObject" ofType="com.runonce.httpbean.assets.resbean.IdAndNameRes">-->
+        <!--<id property="id" column="id"/>-->
+        <!--<result property="name" column="name"/>-->
+        <!--</collection>-->
+    </resultMap>
+    <resultMap id="EventsTableParam" type="com.runonce.model.http.EventsTableParam">
+        <result column="directory" property="directory"/>
+        <result column="thisEventName" property="thisEventName"/>
+        <association property="eventsTable"
+                     javaType="com.runonce.model.eventpublic.EventsTable"
+                     resultMap="com.runonce.dao.eventpublic.EventsTableDao.EventsTable">
+        </association>
+    </resultMap>
+
+    <update id="updateStateById">
+        UPDATE departmental_matters AS dm
+        SET dm.state = #{state,jdbcType=VARCHAR}
+        WHERE
+            dm.id = #{dId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="findByGroupId" parameterType="java.lang.String" resultType="com.runonce.model.eventversionone.DepartmentalMatters">
+        SELECT * FROM departmental_matters WHERE groupId = #{groupId}
+    </select>
+
+    <select id="findDealCount" resultType="com.runonce.model.http.DealCount">
+        SELECT
+            count(*) AS allDeal,
+            count(IF(examineAndApproveState = 7,1,NULL) AND IF(state = 3,1,NULL)) AS accomplishDeal
+        FROM departmental_matters AS dm
+        INNER JOIN events_table et ON et.id = dm.eventId AND et.isMin = 1
+        INNER JOIN t_department td ON td.id = dm.deptId
+    </select>
+
+    <select id="findEventLevel" resultType="com.runonce.model.http.EventLevel">
+         SELECT
+         count(1) AS allDeal,
+         count(IF(td.region = 1,1,NULL) AND IF(ed.isPrivate = 0,1,NULL) ) AS provincialLevel,
+         count(IF(td.region = 2,1,NULL) AND IF(ed.isPrivate = 0,1,NULL) ) AS cityLevel,
+         count(IF(td.region = 3,1,NULL) AND IF(ed.isPrivate = 0,1,NULL)) AS countyLevel,
+         count(IF(ed.isPrivate = 1,1,NULL)) AS countyPrivateLevel
+         FROM departmental_matters AS dm
+         INNER JOIN events_table et ON et.id = dm.eventId
+	     INNER JOIN t_department td ON td.id = dm.deptId
+         INNER JOIN event_directory ed ON ed.id = et.eventName
+		 LEFT JOIN departmental_matters AS dm1 ON dm1.groupId = dm.groupId
+		 LEFT JOIN events_table AS et1 ON et1.id = dm1.eventId
+		 WHERE et1.isMin = 1
+    </select>
+
+    <select id="findAllEventCountByArea" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(*) FROM departmental_matters AS dm
+        INNER JOIN events_table et ON et.id = dm.eventId
+        WHERE et.isMin = 1 AND dm.deptId = #{deptId}
+    </select>
+
+    <select id="findFinishEventCountByArea" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(*) FROM departmental_matters AS dm
+        INNER JOIN events_table et ON et.id = dm.eventId
+        WHERE et.isMin = 1
+        AND dm.state = 3
+        AND dm.examineAndApproveState = 7
+        AND dm.deptId = #{deptId}
+    </select>
+
+    <select id="findIdByEventId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT id FROM departmental_matters WHERE eventId = #{eventId}
+    </select>
+
+    <!--<select id="selectByParam" resultType="com.runonce.model.http.DepartmentalMattersAndDepartmentRes">-->
+    <!--SELECT-->
+    <!--m.id AS Id,-->
+    <!--m.deptId AS deptId,-->
+    <!--t_department.parent_id AS deptPid,-->
+    <!--(-->
+    <!--SELECT-->
+    <!--d.title-->
+    <!--FROM-->
+    <!--t_department d-->
+    <!--WHERE-->
+    <!--d.id = m.deptId-->
+    <!--) AS deptName,-->
+    <!--m.eventId,-->
+    <!--m.state,-->
+    <!--t.eventName,-->
+    <!--t.eventNumber,-->
+    <!--t.eventType,-->
+    <!--t.eventPid,-->
+    <!--t.isMin,-->
+    <!--t.eventCreateTime,-->
+    <!--t.eventUpdateTime,-->
+    <!--t.directoryEncoding,-->
+    <!--&#45;&#45; 行使层级-->
+    <!--t.exerciseHierarchy,-->
+    <!--t.implementingOrgan,-->
+    <!--t.genericName,-->
+    <!--t.directoryName,-->
+    <!--t.settingBasis,-->
+    <!--t.remarks,-->
+    <!--m.businessGuideState,-->
+    <!--m.materialGroupingState,-->
+    <!--m.applicationTypeState,-->
+    <!--m.prequalificationState,-->
+    <!--m.processDescriptionState,-->
+    <!--m.processMapState,-->
+    <!--m.businessSituationState,-->
+    <!--m.formThatState,-->
+    <!--m.presentQuantitativeState,-->
+    <!--m.systemDockingState,-->
+    <!--t.directorySorting-->
+    <!--&#45;&#45; 小类型-->
+    <!--t.itemSmallType,-->
+    <!--&#45;&#45; 实施编码-->
+    <!--t.codingImplementation,-->
+    <!--&#45;&#45; 实施（服务）对象-->
+    <!--t.serviceObject-->
+    <!--FROM-->
+    <!--events_table t,-->
+    <!--departmental_matters m-->
+    <!--LEFT JOIN t_department ON t_department.id = m.deptId-->
+    <!--WHERE-->
+    <!--1=1-->
+    <!--and t.id = m.eventId-->
+    <!--AND t.eventPid = '0'-->
+    <!--&lt;!&ndash;<if test="param.eventType!=null ">&ndash;&gt;-->
+    <!--&lt;!&ndash;and  t.eventType=#{param.eventType,jdbcType=VARCHAR}&ndash;&gt;-->
+    <!--&lt;!&ndash;</if>&ndash;&gt;-->
+    <!--&lt;!&ndash;<if test="param.deptId!=null ">&ndash;&gt;-->
+    <!--&lt;!&ndash;and  m.deptId=#{param.deptId,jdbcType=VARCHAR}&ndash;&gt;-->
+    <!--&lt;!&ndash;</if>&ndash;&gt;-->
+    <!--<if test="(param.eventName!=null and ''!=param.eventName ) || param.eventType != null || param.state!=null">-->
+    <!--AND t.id IN (-->
+    <!--SELECT eventPid FROM events_table WHERE-->
+    <!--isMin = 1-->
+    <!--<if test="param.eventName!=null and ''!=param.eventName">-->
+    <!--AND eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+    <!--<if test="param.eventType!=null">-->
+    <!--AND eventType = #{param.eventType}-->
+    <!--</if>-->
+    <!--<if test="param.state!=null">-->
+    <!--AND id IN (SELECT eventId FROM departmental_matters WHERE state=#{param.state})-->
+    <!--</if>-->
+    <!--UNION-->
+    <!--SELECT id FROM events_table WHERE-->
+    <!--isMin = 0-->
+    <!--<if test="param.eventName!=null and ''!=param.eventName">-->
+    <!--AND eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+    <!--<if test="param.eventType!=null">-->
+    <!--AND eventType = #{param.eventType}-->
+    <!--</if>-->
+    <!--<if test="param.state!=null">-->
+    <!--AND id IN (SELECT eventId FROM departmental_matters WHERE state=#{param.state})-->
+    <!--</if>-->
+    <!--)-->
+    <!--</if>-->
+    <!--&lt;!&ndash;<if test="param.state!=null">&ndash;&gt;-->
+    <!--&lt;!&ndash;and  m.state=#{param.state}&ndash;&gt;-->
+    <!--&lt;!&ndash;</if>&ndash;&gt;-->
+    <!--<if test="param.deptId != null and '' != param.deptId">-->
+    <!--and m.deptId = #{param.deptId}-->
+    <!--</if>-->
+    <!--<if test="departmentIds !=null and (param.deptId == null or param.deptId == '') ">-->
+    <!--and m.deptId IN-->
+    <!--<foreach collection="departmentIds" item="item" index="index" open="(" separator="," close=")">-->
+    <!--#{item}-->
+    <!--</foreach>-->
+    <!--</if>-->
+    <!--</select>-->
+    <select id="selectByDeptId" resultType="com.runonce.model.http.DepartmentalMattersRes">
+        SELECT
+        -- 部门事项ID
+        m.id AS Id,
+        -- 部门ID
+        m.deptId AS deptId,
+        -- 部门名称
+        (
+        SELECT
+        d.title
+        FROM
+        t_department d
+        WHERE
+        d.id = m.deptId
+        ) AS deptName,
+        m.eventId,
+        m.state,
+        -- 事项名称
+        t.eventName,
+        -- 事项编号
+        t.eventNumber,
+        -- 事项类型
+        t.eventType,
+        -- 事项PID
+        t.eventPid,
+        -- 是否是子节点
+        t.isMin,
+        -- 事项状态
+        t.eventState,
+        -- 创建时间
+        t.eventCreateTime,
+        -- 更新时间
+        t.eventUpdateTime,
+        -- 目录编码
+        t.directoryEncoding,
+        -- 行使层级
+        t.exerciseHierarchy,
+        -- 实施机关
+        t.implementingOrgan,
+        -- 目录名称
+        t.genericName,
+        -- 目录名称
+        t.directoryName,
+        -- 设定依据
+        t.settingBasis,
+        -- 备注
+        t.remarks,
+        -- 目录排序
+        t.directorySorting
+        -- 小类型
+        t.itemSmallType,
+        -- 实施编码
+        t.codingImplementation,
+        -- 实施（服务）对象
+        t.serviceObject
+        FROM
+        events_table t,
+        departmental_matters m
+        WHERE
+        1=1
+        and t.id = m.eventId
+        <if test="deptId!=null ">
+            and m.deptId=#{deptId,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <update id="updateBusinessGuideState">
+        UPDATE departmental_matters
+        SET businessGuideState = #{businessGuideState,jdbcType=INTEGER}
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateMaterialGroupingState">
+        UPDATE departmental_matters
+        SET materialGroupingState = #{materialGroupingState,jdbcType=INTEGER}
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateApplicationTypeState">
+        UPDATE departmental_matters
+        SET applicationTypeState = #{applicationTypeState,jdbcType=INTEGER}
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </update>
+    <update id="updatePrequalificationState">
+        UPDATE departmental_matters
+        SET prequalificationState = #{prequalificationState,jdbcType=INTEGER}
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateProcessDescriptionState">
+        UPDATE departmental_matters
+        SET processDescriptionState = #{processDescriptionState,jdbcType=INTEGER}
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateProcessMapState">
+        UPDATE departmental_matters
+        SET processMapState = #{processMapState,jdbcType=INTEGER}
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateFormThatStateState">
+        UPDATE departmental_matters
+        SET formThatState = #{formThatState,jdbcType=INTEGER}
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </update>
+    <!--更新父状态-->
+    <update id="updateFatherState">
+        UPDATE departmental_matters
+        SET state = #{dState,jdbcType=INTEGER}
+        WHERE
+            id = #{dId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="findOtherWithTheDepartment" parameterType="java.lang.String"
+            resultType="com.runonce.model.eventversionone.DepartmentalMatters">
+        SELECT *
+        FROM departmental_matters
+        WHERE eventId = (
+            SELECT eventId
+            FROM departmental_matters
+            WHERE Id = #{eventId})
+    </select>
+
+    <select id="findParent" parameterType="java.lang.String"
+            resultType="com.runonce.model.eventversionone.DepartmentalMatters">
+        SELECT *
+        FROM departmental_matters
+        WHERE id = #{eventId}
+    </select>
+
+    <select id="findState" parameterType="java.lang.String"
+            resultType="com.runonce.model.eventversionone.DepartmentalMatters">
+        SELECT *
+        FROM departmental_matters
+        WHERE id = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAllSubmited" resultType="com.runonce.model.eventversionone.DepartmentalMatters">
+        SELECT *
+        FROM departmental_matters
+        WHERE state = 3
+           OR state = 4
+    </select>
+
+    <select id="selectSecondLevelEvent" resultType="com.runonce.model.http.DepartmentalMattersRes">
+        SELECT
+        m.id AS Id,
+        m.deptId AS deptId,
+        t_department.parent_id AS deptPid,
+        (
+        SELECT
+        d.title
+        FROM
+        t_department d
+        WHERE
+        d.id = m.deptId
+        ) AS deptName,
+        m.eventId,
+        m.state,
+        t.eventName,
+        t.eventNumber,
+        t.eventType,
+        t.eventPid,
+        t.isMin,
+        t.eventState,
+        t.eventCreateTime,
+        t.eventUpdateTime,
+        t.directoryEncoding,
+        -- 行使层级
+        t.exerciseHierarchy,
+        t.implementingOrgan,
+        t.genericName,
+        t.directoryName,
+        t.settingBasis,
+        t.remarks,
+        m.businessGuideState,
+        m.materialGroupingState,
+        m.applicationTypeState,
+        m.prequalificationState,
+        m.processDescriptionState,
+        m.processMapState,
+        m.businessSituationState,
+        m.formThatState,
+        m.presentQuantitativeState,
+        m.systemDockingState,
+        t.directorySorting,
+        -- 小类型
+        t.itemSmallType,
+        -- 实施编码
+        t.codingImplementation,
+        -- 实施（服务）对象
+        t.serviceObject
+        FROM
+        events_table t,
+        departmental_matters m
+        LEFT JOIN t_department ON t_department.id = m.deptId
+        WHERE
+        1=1
+        and t.id = m.eventId
+        <if test="param.eventType!=null ">
+            and t.eventType=#{param.eventType,jdbcType=VARCHAR}
+        </if>
+        <if test="param.eventName!=null and param.eventName!= '' ">
+            and t.eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="param.state!=null ">
+            and m.state LIKE CONCAT('%',#{param.state,jdbcType=VARCHAR},'%')
+        </if>
+        AND m.deptId = #{deptId,jdbcType=VARCHAR}
+        AND m.eventId IN
+        (SELECT id FROM events_table WHERE events_table.eventPid =#{eventId,jdbcType=VARCHAR})
+    </select>
+    <select id="selectAllByParam" resultType="com.runonce.model.http.DepartmentalMattersRes">
+        SELECT
+        m.id AS Id,
+        m.deptId AS deptId,
+        t_department.parent_id AS deptPid,
+        (
+        SELECT
+        d.title
+        FROM
+        t_department d
+        WHERE
+        d.id = m.deptId
+        ) AS deptName,
+        m.eventId,
+        m.state,
+        t.eventName,
+        t.eventNumber,
+        t.eventType,
+        t.eventPid,
+        t.isMin,
+        t.eventCreateTime,
+        t.eventUpdateTime,
+        t.directoryEncoding,
+        t.exerciseHierarchy,
+        t.implementingOrgan,
+        t.genericName,
+        t.directoryName,
+        t.settingBasis,
+        t.remarks,
+        m.businessGuideState,
+        m.materialGroupingState,
+        m.applicationTypeState,
+        m.prequalificationState,
+        m.processDescriptionState,
+        m.processMapState,
+        m.businessSituationState,
+        m.formThatState,
+        m.presentQuantitativeState,
+        m.systemDockingState,
+        t.directorySorting
+        FROM
+        events_table t,
+        departmental_matters m
+        LEFT JOIN t_department ON t_department.id = m.deptId
+        WHERE
+        1=1
+        and t.id = m.eventId
+        AND t.eventPid = '0'
+        <if test="(param.eventName!=null and ''!=param.eventName ) || param.eventType != null || param.state!=null">
+            AND t.id IN (
+            SELECT eventPid FROM events_table WHERE
+            isMin = 1
+            <if test="param.eventName!=null and ''!=param.eventName">
+                AND eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="param.eventType!=null">
+                AND eventType = #{param.eventType}
+            </if>
+            <if test="param.state!=null">
+                AND id IN (SELECT eventId FROM departmental_matters WHERE state=#{param.state})
+            </if>
+            UNION
+            SELECT id FROM events_table WHERE
+            isMin = 0
+            <if test="param.eventName!=null and ''!=param.eventName">
+                AND eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="param.eventType!=null">
+                AND eventType = #{param.eventType}
+            </if>
+            <if test="param.state!=null">
+                AND id IN (SELECT eventId FROM departmental_matters WHERE state=#{param.state})
+            </if>
+            )
+        </if>
+        <if test="param.deptId != null and '' != param.deptId">
+            and m.deptId = #{param.deptId}
+        </if>
+    </select>
+    <select id="findEventNameAndType" resultType="java.util.Map">
+
+        SELECT
+            dm.mappingId,
+            et.eventName,
+            et.eventType,
+            cet.`name` AS eventTypeName
+        FROM
+            departmental_matters AS dm
+                INNER JOIN events_table et ON dm.eventId = et.id
+                LEFT JOIN catalogue_event_type AS cet ON et.eventType = cet.`code`
+        WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+
+    </select>
+
+    <!--查询一级菜单count-->
+    <select id="selectTreeByCount" resultType="java.lang.Long">
+        SELECT
+        count(1)
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON dm.eventId = et.id
+        AND et.eventPid = '0'
+        WHERE 1 = 1
+        <if test="departmentIds !=null and departmentIds.size() > 0">
+            and dm.deptId IN
+            <foreach collection="departmentIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectTreeByList" resultType="com.runonce.model.http.DepartmentalMattersRes">
+        SELECT
+        dm.id,
+        dm.deptId,
+        td.parent_id AS deptPid,
+        td.title AS deptName,
+        td.region AS region,
+        td1.id AS areaCode,
+        td1.title AS areaName,
+        dm.eventId,
+        dm.state,
+        dm.examineAndApproveState,
+        getTheItemName(dm.deptId,et.eventName,et.id) as eventName,
+        -- et.eventName,
+        (CASE
+        WHEN dm.examineAndApproveState = 1 THEN
+        dm.deptProposalEndTime
+        WHEN dm.examineAndApproveState = 6 THEN
+        dm.examineProposalEndTime
+        END) AS examineEndTime,
+        et.eventNumber,
+        et.eventType,
+        et.itemSmallType,
+        et.eventPid,
+        et.isMin,
+        et.eventState,
+        et.eventCreateTime,
+        et.eventUpdateTime,
+        et.directoryEncoding,
+        et.codingImplementation,
+        et.exerciseHierarchy,
+        et.serviceObject,
+        et.implementingOrgan,
+        et.genericName,
+        et.directoryName,
+        et.settingBasis,
+        et.remarks,
+        et.directorySorting,
+        dm.businessGuideState,
+        dm.materialGroupingState,
+        dm.applicationTypeState,
+        dm.prequalificationState,
+        dm.processDescriptionState,
+        dm.processMapState,
+        dm.businessSituationState,
+        dm.formThatState,
+        dm.presentQuantitativeState,
+        dm.systemDockingState,
+        (CASE when ( select count(*) from revisionhistory as v where v.dmId= dm.id)>0 then true
+        else false end ) as isShow
+        FROM
+        (
+        SELECT
+        dm.*
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON dm.eventId = et.id
+        AND et.eventPid = '0'
+        <if test="departmentIds !=null and departmentIds.size() > 0">
+            AND dm.deptId IN
+            <foreach collection="departmentIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY
+        et.eventName
+        LIMIT
+        #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+        ) AS d
+        INNER JOIN departmental_matters AS dm ON d.groupId = dm.groupId
+        LEFT JOIN events_table AS et ON et.id = dm.eventId
+        LEFT JOIN t_department AS td ON dm.deptId = td.id
+        LEFT JOIN t_department AS td1 ON td1.area_code = td.id
+    </select>
+    <select id="selectEventIdListByCondition" resultType="com.runonce.model.http.DepartmentalMattersRes">
+        SELECT
+        dm.id,
+        dm.deptId,
+        td.parent_id AS deptPid,
+        td.title AS deptName,
+        td.region AS region,
+        td1.id AS areaCode,
+        td1.title AS areaName,
+        dm.eventId,
+        dm.state,
+        dm.examineAndApproveState,
+        et.eventName,
+        (CASE
+        WHEN dm.examineAndApproveState = 1 THEN
+        dm.deptProposalEndTime
+        WHEN dm.examineAndApproveState = 6 THEN
+        dm.examineProposalEndTime
+        END) AS examineEndTime,
+        et.eventNumber,
+        et.eventType,
+        et.itemSmallType,
+        '0' as eventPid,
+        et.isMin,
+        et.eventState,
+        et.eventCreateTime,
+        et.eventUpdateTime,
+        et.directoryEncoding,
+        et.codingImplementation,
+        et.exerciseHierarchy,
+        et.serviceObject,
+        et.implementingOrgan,
+        et.genericName,
+        et.directoryName,
+        et.settingBasis,
+        et.remarks,
+        et.directorySorting,
+        dm.businessGuideState,
+        dm.materialGroupingState,
+        dm.applicationTypeState,
+        dm.prequalificationState,
+        dm.processDescriptionState,
+        dm.processMapState,
+        dm.businessSituationState,
+        dm.formThatState,
+        dm.presentQuantitativeState,
+        dm.systemDockingState,
+        (CASE when ( select count(*) from revisionhistory as v where v.dmId= dm.id)>0 then true
+        else false end ) as isShow
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON et.id = dm.eventId
+        LEFT JOIN t_department AS td ON dm.deptId = td.id
+        LEFT JOIN t_department AS td1 ON td1.area_code = td.id
+        WHERE
+        et.isMin = TRUE
+        <if test="param.eventName!=null and ''!=param.eventName">
+            AND et.eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="param.eventType!=null">
+            AND et.eventType = #{param.eventType}
+        </if>
+        <if test="param.state!=null">
+            AND dm.state = #{param.state}
+        </if>
+        <if test="param.dmId!=null and ''!=param.dmId ">
+            AND dm.id = #{param.dmId}
+        </if>
+        <if test="param.examineAndApproveStateList !=null and param.examineAndApproveStateList.size() > 0">
+            AND dm.examineAndApproveState IN
+            <foreach collection="param.examineAndApproveStateList" item="item" index="index" open="(" separator=","
+                     close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="departmentIds !=null and departmentIds.size() > 0">
+            AND dm.deptId IN
+            <foreach collection="departmentIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+
+    <!--条件查询返回树-->
+    <select id="selectTreeByConditionCount" resultType="java.lang.Long">
+        SELECT
+        count(1)
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON et.id = dm.eventId
+        WHERE
+        dm.groupId IN (
+        (
+        SELECT
+        groupId
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON et.id = dm.eventId
+        WHERE
+        et.isMin = TRUE
+        <if test="param.eventName!=null and ''!=param.eventName">
+            AND et.eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="param.eventType!=null">
+            AND et.eventType = #{param.eventType}
+        </if>
+        <if test="param.state!=null">
+            AND dm.state = #{param.state}
+        </if>
+        <if test="param.dmId!=null and ''!=param.dmId ">
+            AND dm.id = #{param.dmId}
+        </if>
+        <if test="param.examineAndApproveStateList !=null and param.examineAndApproveStateList.size() > 0">
+            AND dm.examineAndApproveState IN
+            <foreach collection="param.examineAndApproveStateList" item="item" index="index" open="(" separator=","
+                     close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="departmentIds !=null and departmentIds.size() > 0">
+            AND dm.deptId IN
+            <foreach collection="departmentIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        )
+        )
+        AND et.eventPid = '0'
+    </select>
+    <select id="selectByConditionList" resultType="com.runonce.model.http.DepartmentalMattersRes">
+        SELECT
+        dm.id,
+        dm.deptId,
+        td.parent_id AS deptPid,
+        td.title AS deptName,
+        td.region AS region,
+        td1.id AS areaCode,
+        td1.title AS areaName,
+        dm.eventId,
+        dm.state,
+        dm.examineAndApproveState,
+        getTheItemName(dm.deptId,et.eventName,et.id) as eventName,
+        (CASE
+        WHEN dm.examineAndApproveState = 1 THEN
+        dm.deptProposalEndTime
+        WHEN dm.examineAndApproveState = 6 THEN
+        dm.examineProposalEndTime
+        END) AS examineEndTime,
+        et.eventNumber,
+        et.eventType,
+        et.itemSmallType,
+        et.eventPid,
+        et.isMin,
+        et.eventState,
+        et.eventCreateTime,
+        et.eventUpdateTime,
+        et.directoryEncoding,
+        et.codingImplementation,
+        et.exerciseHierarchy,
+        et.serviceObject,
+        et.implementingOrgan,
+        et.genericName,
+        et.directoryName,
+        et.settingBasis,
+        et.remarks,
+        et.directorySorting,
+        dm.businessGuideState,
+        dm.materialGroupingState,
+        dm.applicationTypeState,
+        dm.prequalificationState,
+        dm.processDescriptionState,
+        dm.processMapState,
+        dm.businessSituationState,
+        dm.formThatState,
+        dm.presentQuantitativeState,
+        dm.systemDockingState,
+        (CASE when ( select count(*) from revisionhistory as v where v.dmId= dm.id)>0 then true
+        else false end ) as isShow
+        FROM
+        (
+        SELECT
+        dm.*
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON et.id = dm.eventId
+        WHERE
+        dm.groupId IN (
+        (
+        SELECT
+        groupId
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON et.id = dm.eventId
+        WHERE
+        et.isMin = TRUE
+        <if test="param.eventName!=null and ''!=param.eventName">
+            AND et.eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="param.eventType!=null">
+            AND et.eventType = #{param.eventType}
+        </if>
+        <if test="param.state!=null">
+            AND dm.state = #{param.state}
+        </if>
+        <if test="param.dmId!=null and ''!=param.dmId ">
+            AND dm.id = #{param.dmId}
+        </if>
+        <if test="param.examineAndApproveStateList !=null and param.examineAndApproveStateList.size() > 0">
+            AND dm.examineAndApproveState IN
+            <foreach collection="param.examineAndApproveStateList" item="item" index="index" open="(" separator=","
+                     close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="departmentIds !=null and departmentIds.size() > 0">
+            AND dm.deptId IN
+            <foreach collection="departmentIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        )
+        )
+        AND et.eventPid = '0'
+        ORDER BY et.eventName
+        LIMIT
+        #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+
+        ) AS dmSort
+        INNER JOIN departmental_matters AS dm ON dmSort.groupId = dm.groupId
+        INNER JOIN events_table AS et ON et.id = dm.eventId
+        LEFT JOIN t_department AS td ON dm.deptId = td.id
+        LEFT JOIN t_department AS td1 ON td1.area_code = td.id
+    </select>
+
+
+    <select id="selectGroupIdByEventIds" resultType="java.lang.String">
+
+        SELECT
+        max(a.groupId)
+        FROM
+        departmental_matters a,
+        events_table b
+        WHERE
+        a.eventId = b.id
+        AND a.deptId=#{deptId}
+        and b.eventPid='0'
+
+        <if test="eventIds !=null and eventIds.size() > 0">
+            AND b.id IN
+            <foreach collection="eventIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+    </select>
+    <select id="selectPidById" resultType="java.lang.String">
+        SELECT
+            dm1.id
+        FROM
+            departmental_matters AS dm
+                INNER JOIN events_table AS et ON dm.eventId = et.id
+                INNER JOIN departmental_matters AS dm1 ON dm1.eventId = et.eventPid
+        WHERE
+            dm.id = #{departmentalMattersId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findEventsTableParamByDmid" parameterType="java.lang.String" resultMap="EventsTableParam">
+        SELECT
+            et.*,
+            getTheItemName(dm.deptId, et.eventName, et.id)    AS directory,
+            getTheItemName(dm1.deptId, et1.eventName, et1.id) AS thisEventName
+        FROM events_table AS et
+                 LEFT JOIN departmental_matters dm ON dm.eventId = et.id
+                 LEFT JOIN events_table et1 ON et1.id = et.eventPid
+                 LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+        WHERE dm.id = #{dmId}
+    </select>
+
+
+    <select id="selectSonPidByParId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT dm1.id
+        FROM departmental_matters AS dm
+                 INNER JOIN events_table AS et ON dm.eventId = et.id
+                 INNER JOIN departmental_matters AS dm1 ON dm1.eventId = et.eventPid
+        WHERE dm.eventId = #{eventId}
+    </select>
+
+    <select id="selectSonState" resultType="java.util.Map">
+
+        SELECT
+            -- 父id
+            dm.id,
+            -- 子状态
+            dm1.state,
+            -- 子审核状态
+            dm1.examineAndApproveState
+        FROM
+            departmental_matters AS dm
+                INNER JOIN events_table AS et ON et.id = dm.eventId
+                INNER JOIN events_table AS et1 ON et.id = et1.eventPid
+                INNER JOIN departmental_matters AS dm1 On et1.id = dm1.eventId
+        WHERE
+            dm.id = #{departmentalMattersId,jdbcType=VARCHAR}
+        GROUP BY dm1.state
+    </select>
+    <!--关联id查询-->
+    <select id="selectMappingIdById" resultType="java.lang.String">
+        SELECT
+            dm.mappingId
+        FROM
+            departmental_matters AS dm
+        WHERE
+            dm.id = #{departmentalMattersId,jdbcType=VARCHAR}
+    </select>
+    <!--事项提交后梳理员可修改的状态-->
+    <select id="selectRevisableByIdAndIsApproval" resultType="java.util.Map">
+
+        SELECT
+            mp.sheetNum,
+            mp.state
+        FROM
+            matterproposal AS mp
+        WHERE 1 = 1
+          AND mp.departmentalMattersId = #{departmentalMattersId}
+          AND mp.isApproval = #{isApproval}
+    </select>
+    <select id="selectDepartmentalMattersAndEvent"
+            resultType="com.runonce.httpbean.assets.resbean.DepartmentalMattersAndEventRes">
+        SELECT
+            dm.id,
+            dm.state,
+            dm.deptId,
+            dm.eventId,
+            getTheItemName(dm.deptId, et.eventName, et.id) AS eventName,
+            getTheItemName(dm1.deptId, et1.eventName, et1.id) AS directoryName,
+            et.eventType,
+            et.itemSmallType,
+            cet.`name` AS eventTypeName,
+            et.codingImplementation,
+            et.directoryEncoding,
+            et.exerciseHierarchy,
+            et.codingImplementation,
+            et.implementingOrgan,
+            et.serviceObject
+        FROM
+            departmental_matters AS dm
+            INNER JOIN events_table AS et ON dm.eventId = et.id
+            LEFT JOIN events_table et1 ON et1.id = et.eventPid
+            LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+            LEFT JOIN catalogue_event_type AS cet ON et.eventType = cet.id
+        WHERE 1 = 1
+          AND dm.id = #{departmentalMattersId}
+    </select>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String">
+        delete
+        from departmental_matters
+        where eventId = #{eventId}
+    </delete>
+
+
+    <select id="SelectDmRegion" parameterType="java.lang.String" resultType="java.lang.Integer">
+
+        SELECT
+            b.region
+        FROM
+            departmental_matters AS a,
+            t_department AS b
+        WHERE
+            a.deptId = b.id
+          and a.id = #{dmId}
+    </select>
+    <select id="selectEventIdListBySituationChildId" resultType="com.runonce.model.http.DepartmentalMattersRes">
+        SELECT
+        dm.id,
+        dm.deptId,
+        td.parent_id AS deptPid,
+        td.title AS deptName,
+        td.region AS region,
+        td1.id AS areaCode,
+        td1.title AS areaName,
+        dm.eventId,
+        dm.state,
+        dm.examineAndApproveState,
+        et.eventName,
+        et.eventNumber,
+        et.eventType,
+        et.itemSmallType,
+        '0' as eventPid,
+        et.isMin,
+        et.eventState,
+        et.eventCreateTime,
+        et.eventUpdateTime,
+        et.directoryEncoding,
+        et.codingImplementation,
+        et.exerciseHierarchy,
+        et.serviceObject,
+        et.implementingOrgan,
+        et.genericName,
+        et.directoryName,
+        et.settingBasis,
+        et.remarks,
+        et.directorySorting,
+        dm.businessGuideState,
+        dm.materialGroupingState,
+        dm.applicationTypeState,
+        dm.prequalificationState,
+        dm.processDescriptionState,
+        dm.processMapState,
+        dm.businessSituationState,
+        dm.formThatState,
+        dm.presentQuantitativeState,
+        dm.systemDockingState
+        FROM
+        departmental_matters AS dm
+        INNER JOIN events_table AS et ON et.id = dm.eventId
+        LEFT JOIN t_department AS td ON dm.deptId = td.id
+        LEFT JOIN t_department AS td1 ON td1.area_code = td.id
+        INNER JOIN  situation_child_and_dm_model AS scdm ON scdm.departmentalMattersId = dm.id
+        WHERE
+        et.isMin = TRUE
+        AND
+        scdm.situationChildId = #{situationChildId}
+
+    </select>
+    <select id="sendAllClasses" resultType="com.runonce.httpbean.assets.reqbean.ImportClassesReq">
+
+
+
+
+    </select>
+
+</mapper>

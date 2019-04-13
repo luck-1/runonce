@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.PdfToImageModelDao">
+
+    <resultMap id="PdfToImageModel" type="com.runonce.model.http.PdfToImageModel" >
+        <result column="id" property="id" />
+        <result column="materialId" property="materialId" />
+        <result column="imageName" property="imageName" />
+        <result column="sourceName" property="sourceName" />
+    </resultMap>
+
+    <select id="findByMaterialId" resultType="com.runonce.model.http.PdfToImageModel" parameterType="java.lang.String">
+        SELECT * FROM pdf_to_image_model WHERE materialId = #{materialId}
+    </select>
+
+    <select id="findBySourceName" parameterType="java.lang.String" resultType="com.runonce.model.http.PdfToImageModel">
+        SELECT * FROM pdf_to_image_model WHERE sourceName = #{sourceName}
+    </select>
+
+</mapper>

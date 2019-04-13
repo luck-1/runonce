@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversiontwo.BusinessGuideAuditAndForwardingCategoryTwoDao">
+
+    <resultMap id="BusinessGuideAuditAndForwardingCategoryTwo" type="com.runonce.model.eventversiontwo.BusinessGuideAuditAndForwardingCategoryTwo" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="type" property="type" />
+        <result column="creationTime" property="creationTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="userName" property="userName" />
+        <result column="majorTypesOfEvents" property="majorTypesOfEvents" />
+        <result column="itemSmallType" property="itemSmallType" />
+        <result column="itemCatalogue" property="itemCatalogue" />
+        <result column="firstInstanceOrgan" property="firstInstanceOrgan" />
+        <result column="nameOfProvincialFirstInspectionAuthority" property="nameOfProvincialFirstInspectionAuthority" />
+        <result column="itemName" property="itemName" />
+        <result column="nameOfMunicipalFirstInspectionAuthority" property="nameOfMunicipalFirstInspectionAuthority" />
+        <result column="nameOfPreliminaryInspectionOrgansAtCountyLevel" property="nameOfPreliminaryInspectionOrgansAtCountyLevel" />
+        <result column="courtOfFinalAppeal" property="courtOfFinalAppeal" />
+        <result column="nameOfCentralFinalAppealAuthority" property="nameOfCentralFinalAppealAuthority" />
+        <result column="nameOfProvincialFinalAppealAuthority" property="nameOfProvincialFinalAppealAuthority" />
+        <result column="serviceObject" property="serviceObject" />
+        <result column="serviceTopic" property="serviceTopic" />
+        <result column="nameOfMunicipalFinalAppealAuthority" property="nameOfMunicipalFinalAppealAuthority" />
+        <result column="reportingAndExaminationAndApprovalAuthority" property="reportingAndExaminationAndApprovalAuthority" />
+        <result column="nameOfCountyLevelTransferExaminationAndApprovalAuthority" property="nameOfCountyLevelTransferExaminationAndApprovalAuthority" />
+        <result column="nameOfMunicipalTransferExaminationAndApprovalAuthorities" property="nameOfMunicipalTransferExaminationAndApprovalAuthorities" />
+        <result column="nameOfProvincialTransferExaminationAndApprovalAuthority" property="nameOfProvincialTransferExaminationAndApprovalAuthority" />
+        <result column="statutoryCompletionTimeLimitAtCountyLevel" property="statutoryCompletionTimeLimitAtCountyLevel" />
+        <result column="municipalStatutoryDeadlineForCompletion" property="municipalStatutoryDeadlineForCompletion" />
+        <result column="provincialStatutoryCompletionTimeLimit" property="provincialStatutoryCompletionTimeLimit" />
+        <result column="timeLimitForFulfillingCountyLevelCommitments" property="timeLimitForFulfillingCountyLevelCommitments" />
+        <result column="municipalCommitmentCompletionTime_limit" property="municipalCommitmentCompletionTimeLimit" />
+        <result column="jointAgency" property="jointAgency" />
+        <result column="applicationOfIointOrganizations" property="applicationOfIointOrganizations" />
+        <result column="provincialCommitmentDeadline" property="provincialCommitmentDeadline" />
+        <result column="annualExaminationOrAnnualInspection" property="annualExaminationOrAnnualInspection" />
+        <result column="numberOfAnnualReviews" property="numberOfAnnualReviews" />
+        <result column="charge" property="charge" />
+        <result column="chargingStandard" property="chargingStandard" />
+        <result column="chargingBasis" property="chargingBasis" />
+        <result column="paymentMethod" property="paymentMethod" />
+        <result column="methodOfDeliveryOfApplicationMaterials" property="methodOfDeliveryOfApplicationMaterials" />
+        <result column="onlineServiceSystem" property="onlineServiceSystem" />
+        <result column="webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem" />
+        <result column="handlingResult" property="handlingResult" />
+        <result column="handlingForm" property="handlingForm" />
+        <result column="onlineApplicationForm" property="onlineApplicationForm" />
+        <result column="eventStar" property="eventStar" />
+        <result column="typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace" />
+        <result column="processingTime" property="processingTime" />
+        <result column="placeOfProcessing" property="placeOfProcessing" />
+        <result column="addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace" />
+        <result column="processingWindow" property="processingWindow" />
+        <result column="quantitativeRestriction" property="quantitativeRestriction" />
+        <result column="enquiry" property="enquiry" />
+        <result column="commonProblem" property="commonProblem" />
+        <result column="AcceptanceConditions" property="acceptanceConditions" />
+        <result column="settingBasis" property="settingBasis" />
+        <result column="remarks" property="remarks" />
+        <result column="consultationApproach" property="consultationApproach" />
+        <result column="serviceSupportHotline" property="serviceSupportHotline" />
+        <result column="itemSequencing" property="itemSequencing" />
+        <result column="materialSubmissionStatement" property="materialSubmissionStatement" />
+        <result column="exerciseHierarchy" property="exerciseHierarchy" />
+    </resultMap>
+    <select id="findByEventId" parameterType="java.lang.String" resultType="com.runonce.model.eventversiontwo.BusinessGuideAuditAndForwardingCategoryTwo">
+        SELECT
+            f_catalogue_event_type(a.majorTypesOfEvents)  as majorTypesOfEvents ,
+            f_catalogue_item_subtype(a.itemSmallType)  as itemSmallType ,
+            f_service_object(a.serviceObject)  as serviceObject ,
+            f_service_topic(a.serviceTopic)  as  serviceTopic,
+            f_exercise_hierarchy(a.exerciseHierarchy)  as exerciseHierarchy ,
+            f_annual_review_or_view(a.annualExaminationOrAnnualInspection)  as  numberOfAnnualOrAnnualReviews,
+            f_handling_form(a.handlingForm)  as handlingForm ,
+            f_online_application_form(a.onlineApplicationForm)  as  onlineApplicationForm,
+            f_event_star(a.eventStar)  as eventStar
+        FROM business_guide_audit_and_forwarding_category_two a
+        WHERE eventId = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String" >
+        DELETE FROM  business_guide_audit_and_forwarding_category_two WHERE eventID=#{eventID}
+    </delete>
+
+</mapper>

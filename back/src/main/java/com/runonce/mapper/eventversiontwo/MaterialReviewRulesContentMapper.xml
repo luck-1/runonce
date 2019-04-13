@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversiontwo.MaterialReviewRulesContentDao">
+
+    <resultMap id="MaterialReviewRulesContent" type="com.runonce.model.eventversiontwo.MaterialReviewRulesContent" >
+        <result column="id" property="id" />
+        <result column="receivingPersonnelPoints" property="receivingPersonnelPoints" />
+        <result column="ApproverPoints" property="approverPoints" />
+        <result column="rulesId" property="rulesId" />
+    </resultMap>
+</mapper>

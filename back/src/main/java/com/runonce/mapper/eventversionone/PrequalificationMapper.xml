@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.PrequalificationDao">
+
+    <resultMap id="Prequalification" type="com.runonce.model.eventversionone.Prequalification" >
+        <result column="id" property="id" />
+        <result column="pretrialContent" property="pretrialContent" />
+        <result column="auditSpecification" property="auditSpecification" />
+        <result column="eventId" property="eventId" />
+        <result column="auditMode" property="auditMode" />
+        <result column="auditOperation" property="auditOperation" />
+        <result column="remarks" property="remarks" />
+        <result column="itemNumber" property="itemNumber" />
+    </resultMap>
+    <select id="findByEventId" resultType="com.runonce.model.eventversionone.Prequalification">
+        select * from prequalification where eventId = #{eventId} order by itemNumber  asc
+    </select>
+    <delete id="deleteByEventId" parameterType="com.runonce.model.eventversionone.Prequalification">
+        delete  from prequalification where eventId = #{eventId}
+    </delete>
+</mapper>

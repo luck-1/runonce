@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.BusinessGuideAuditAndForwardingCategoryOnePrivateDao">
+
+    <resultMap id="BaseResultMap" type="com.runonce.model.eventversionone.BusinessGuideAuditAndForwardingCategoryOnePrivate" >
+        <id column="departmentalMattersId" property="departmentalMattersId" jdbcType="VARCHAR" />
+        <result column="a_jointAgency" property="jointAgency" jdbcType="VARCHAR" />
+        <result column="a_applicationOfJointOrganizations" property="applicationOfJointOrganizations" jdbcType="VARCHAR" />
+        <result column="a_webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem" jdbcType="VARCHAR" />
+        <result column="a_onlineServiceSystem" property="onlineServiceSystem" jdbcType="VARCHAR" />
+        <result column="a_handlingForm" property="handlingForm" jdbcType="VARCHAR" />
+        <result column="a_onlineApplicationForm" property="onlineApplicationForm" jdbcType="VARCHAR" />
+        <result column="a_typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace" jdbcType="VARCHAR" />
+        <result column="a_processingTime" property="processingTime" jdbcType="VARCHAR" />
+        <result column="a_placeOfProcessing" property="placeOfProcessing" jdbcType="VARCHAR" />
+        <result column="a_addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace" jdbcType="VARCHAR" />
+        <result column="a_processingWindow" property="processingWindow" jdbcType="VARCHAR" />
+        <result column="a_enquiry" property="enquiry" jdbcType="VARCHAR" />
+        <result column="a_advisoryPhone" property="advisoryPhone" jdbcType="VARCHAR" />
+        <result column="a_serviceSupportHotline" property="serviceSupportHotline" jdbcType="VARCHAR" />
+        <result column="a_itemSequencing" property="itemSequencing" jdbcType="VARCHAR" />
+        <result column="a_remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="a_state" property="state" />
+    </resultMap>
+
+</mapper>

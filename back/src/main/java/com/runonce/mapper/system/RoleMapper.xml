@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.runonce.dao.system.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.runonce.model.system.Role">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="default_role" property="defaultRole" jdbcType="BIT"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="data_type" property="dataType" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, create_by, create_time, update_by, update_time, name, del_flag, default_role, 
+    description, data_type
+  </sql>
+    <select id="selectRoleListByUserId" resultMap="BaseResultMap">
+      SELECT
+	    tr.*
+      FROM
+      	t_user_role AS tus
+      LEFT JOIN t_role AS tr ON tus.role_id = tr.id
+      WHERE tus.user_id = #{userId ,jdbcType=VARCHAR}
+      AND tus.del_flag = 0
+
+    </select>
+
+</mapper>

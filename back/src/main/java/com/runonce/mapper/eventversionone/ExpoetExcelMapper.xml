@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.ExportExcelDao">
+
+
+    <select id="selectApplicationTypeFileByEventIdAndParentId"
+            resultType="com.runonce.model.eventversionone.ApplicationTypeField"
+            parameterType="com.runonce.model.eventversionone.ApplicationTypeField">
+select  * from  application_type_field where eventId=#{eventId} and parentId=#{parentId} order by sortNumber
+
+    </select>
+
+
+    <select id="selectApplicationTypeFileLeafNodeCountByEventId"
+            resultType="java.lang.Integer"
+            parameterType="com.runonce.model.eventversionone.ApplicationTypeField">
+        select  count(*) from  application_type_field where eventId=#{eventId} and leafNode=true
+
+    </select>
+
+</mapper>
+

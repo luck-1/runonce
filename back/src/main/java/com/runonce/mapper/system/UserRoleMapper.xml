@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.runonce.dao.system.mapper.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.runonce.model.system.UserRole" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_by, create_time, del_flag, update_by, update_time, role_id, user_id
+  </sql>
+    <select id="findDepIdsByUserId" resultType="java.lang.String">
+      SELECT
+      	DISTINCT  td.id
+      FROM
+      	t_user AS tu
+      LEFT JOIN t_user_role AS tur ON  tu.id = tur.user_id
+      AND tur.del_flag =0
+      LEFT JOIN t_role AS tr ON tr.id = tur.role_id
+      AND tr.del_flag = 0
+      LEFT JOIN t_role_department AS trd ON trd.role_id = tr.id
+      AND trd.del_flag = 0
+      LEFT JOIN t_department AS td ON td.id = trd.department_id
+      AND td.del_flag = 0
+      WHERE
+      tu.del_flag = 0
+      AND tu.id = #{userId ,jdbcType=VARCHAR}
+    </select>
+
+
+
+  <select id="findByUserId" resultType="com.runonce.model.system.Role">
+    SELECT
+      DISTINCT  tu.*
+    FROM
+      t_user AS tu
+        LEFT JOIN t_user_role AS tur ON  tu.id = tur.user_id
+        AND tur.del_flag =0
+        LEFT JOIN t_role AS tr ON tr.id = tur.role_id
+        AND tr.del_flag = 0
+    WHERE
+      tu.del_flag = 0
+      AND tu.id = #{userId ,jdbcType=VARCHAR}
+  </select>
+
+
+
+
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversiontwo.QuantitativeRenderingDao">
+
+    <resultMap id="QuantitativeRendering" type="com.runonce.model.eventversiontwo.QuantitativeRendering" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="type" property="type" />
+        <result column="content" property="content" />
+        <result column="question" property="question" />
+        <result column="remarks" property="remarks" />
+        <result column="beforeMateriaReduction" property="beforeMateriaReduction" />
+        <result column="afterReducingMaterial" property="afterReducingMaterial" />
+    </resultMap>
+
+    <select id="findBydmId" parameterType="java.lang.String" resultType="com.runonce.model.eventversiontwo.QuantitativeRendering">
+        SELECT *
+        FROM quantitative_rendering
+        WHERE eventId = #{eventId,jdbcType=VARCHAR}
+    </select>
+</mapper>

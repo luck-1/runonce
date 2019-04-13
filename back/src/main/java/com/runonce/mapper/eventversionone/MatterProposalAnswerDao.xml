@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.MatterProposalAnswerDao">
+
+    <resultMap id="MatterProposalAnswer" type="com.runonce.model.eventversionone.MatterProposalAnswer" >
+        <result column="matterProposalAnswerId" property="id" />
+        <result column="questionId" property="questionId" />
+        <result column="answererId" property="answererId" />
+        <result column="answerContent" property="answerContent" />
+        <result column="answerTime" property="answerTime" />
+        <result column="answerDeleteState" property="answerDeleteState" />
+        <result column="answererUser" property="answererUser" />
+    </resultMap>
+
+    <select id="selectMatterProposalAnswer"  resultMap="MatterProposalAnswer">
+
+        SELECT
+        *,
+        a.id AS matterProposalAnswerId,
+        f.user_name AS answererUser
+        FROM
+        matter_proposal_answer as a
+        LEFT JOIN t_user f ON f.id = a.answererId
+        WHERE
+        1=1
+        AND
+        a.questionId = #{questionId}
+        ORDER BY a.answerTime
+
+    </select>
+</mapper>

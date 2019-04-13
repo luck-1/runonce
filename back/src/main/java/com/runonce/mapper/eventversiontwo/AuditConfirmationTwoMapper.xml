@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversiontwo.AuditConfirmationTwoDao">
+
+    <resultMap id="AuditConfirmationTwo" type="com.runonce.model.eventversiontwo.AuditConfirmationTwo" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="departmrnt" property="departmrnt" />
+        <result column="formName" property="formName" />
+        <result column="describetion" property="describetion" />
+        <result column="pageCount" property="pageCount" />
+        <result column="approval" property="approval" />
+        <result column="staffConfirmation" property="staffConfirmation" />
+        <result column="staffName" property="staffName" />
+    </resultMap>
+</mapper>

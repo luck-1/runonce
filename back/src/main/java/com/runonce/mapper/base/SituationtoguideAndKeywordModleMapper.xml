@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.base.SituationtoguideAndKeywordModleDao">
+
+    <resultMap id="SituationtoguideAndKeywordModle" type="com.runonce.model.base.SituationtoguideAndKeywordModle" >
+        <result column="id" property="id" />
+        <result column="situationToGuideId" property="situationToGuideId" />
+        <result column="keywordId" property="keywordId" />
+    </resultMap>
+
+    <select id="findKeywordNameBySituationToGuideId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT kt.name FROM situationtoguide_and_keyword_modle AS sakm
+        INNER JOIN keyword_table kt ON sakm.keywordId = kt.id
+        WHERE sakm.situationToGuideId = #{situationToGuideId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteBySituationToGuideId" parameterType="java.lang.String">
+        DELETE FROM situationtoguide_and_keyword_modle WHERE situationToGuideId = #{situationToGuideId}
+    </delete>
+</mapper>

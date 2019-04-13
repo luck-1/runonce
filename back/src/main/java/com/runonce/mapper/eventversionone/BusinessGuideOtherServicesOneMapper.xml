@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.BusinessGuideOtherServicesOneDao">
+    <resultMap id="BusinessGuideOtherServicesOne" type="com.runonce.model.eventversionone.BusinessGuideOtherServicesOne" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="creationTime" property="creationTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="userName" property="userName" />
+        <result column="implementingOrgan" property="implementingOrgan" />
+        <result column="implementingBody" property="implementingBody" />
+        <result column="typeOfOffice" property="typeOfOffice" />
+        <result column="timeLimitType" property="timeLimitType" />
+        <result column="commitmenTimeLimit" property="commitmenTimeLimit" />
+        <result column="statementOfCommitmentDeadline" property="statementOfCommitmentDeadline" />
+        <result column="charge" property="charge" />
+        <result column="chargingStandard" property="chargingStandard" />
+        <result column="chargingBasis" property="chargingBasis" />
+        <result column="paymentMethod" property="paymentMethod" />
+        <result column="methodOfDeliveryOfApplicationMaterials" property="methodOfDeliveryOfApplicationMaterials" />
+        <result column="webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem" />
+        <result column="handlingForm" property="handlingForm" />
+        <result column="numberOfVisitsToTheFieldHall" property="numberOfVisitsToTheFieldHall" />
+        <result column="typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace" />
+        <result column="processingTime" property="processingTime" />
+        <result column="PlaceOfProcessing" property="placeOfProcessing" />
+        <result column="addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace" />
+        <result column="processingWindow" property="processingWindow" />
+        <result column="intermediaryService" property="intermediaryService" />
+        <result column="enquiry" property="enquiry" />
+        <result column="commonProblem" property="commonProblem" />
+        <result column="acceptingConditions" property="acceptingConditions" />
+        <result column="handlingBasis" property="handlingBasis" />
+        <result column="serviceRestrictions" property="serviceRestrictions" />
+        <result column="serviceTimeConstraint" property="serviceTimeConstraint" />
+        <result column="serviceFrequencyRestriction" property="serviceFrequencyRestriction" />
+        <result column="remarks" property="remarks" />
+        <result column="otherServiceRestrictions" property="otherServiceRestrictions" />
+        <result column="consultationApproach" property="consultationApproach" />
+        <result column="advisoryAddress" property="advisoryAddress" />
+        <result column="serviceSupportHotline" property="serviceSupportHotline" />
+        <result column="complaintChannels" property="complaintChannels" />
+        <result column="complaintAddress" property="complaintAddress" />
+        <result column="itemSequencing" property="itemSequencing" />
+        <result column="applicationMaterials" property="applicationMaterials" />
+        <result column="materialSubmissionStatement" property="materialSubmissionStatement" />
+        <result column="resultType" property="resultType" />
+        <result column="resultName" property="resultName" />
+        <result column="havaResultSample" property="havaResultSample" />
+        <result column="resultSample" property="resultSample" />
+        <result column="serviceTopic" property="serviceTopic"/>
+        <result column="supportOnlinePayment" property="supportOnlinePayment"/>
+        <result column="isSupportLogistics" property="isSupportLogistics"/>
+        <result column="state" property="state"/>
+
+        <result column="a_serviceObject" property="serviceObject"/>
+        <result column="a_itemSmallType" property="itemSmallType" />
+        <result column="a_majorTypesOfEvents" property="majorTypesOfEvents" />
+        <result column="a_basicCoding" property="basicCoding" />
+        <result column="a_exerciseHierarchy" property="exerciseHierarchy" />
+        <result column="a_codingImplementation" property="codingImplementation" />
+        <result column="a_itemCatalogue" property="itemCatalogue" />
+        <result column="a_ItemName" property="itemName" />
+        <!--<collection property="serviceObject" ofType="java.lang.String" column="id"-->
+                    <!--select="com.runonce.dao.base.ServiceBusinessguideiModleDao.findServiceObject">-->
+        <!--</collection>-->
+    </resultMap>
+
+    <resultMap id="BusinessGuideOtherServicesOneReq"
+               type="com.runonce.httpbean.assets.reqbean.BusinessGuideOtherServicesOneReq">
+        <association property="businessGuideOtherServicesOne"
+                     javaType="com.runonce.model.eventversionone.BusinessGuideOtherServicesOne"
+                     resultMap="BusinessGuideOtherServicesOne">
+        </association>
+        <association property="businessGuideOtherServicesOnePrivate"
+                     javaType="com.runonce.model.eventversionone.BusinessGuideOtherServicesOnePrivate"
+                     resultMap="com.runonce.dao.eventversionone.BusinessGuideOtherServicesOnePrivateDao.BaseResultMap">
+        </association>
+    </resultMap>
+
+    <select id="findByEventId" parameterType="java.lang.String" resultMap="BusinessGuideOtherServicesOneReq">
+        SELECT a.*,
+            et.serviceObject AS a_serviceObject,
+            cet.`name` AS a_itemSmallType,
+            et.eventType AS a_majorTypesOfEvents,
+            CONCAT(LEFT(et.baseDirectoryEncoding,4),cbgd.code,RIGHT(et.baseDirectoryEncoding,6)) AS a_basicCoding,
+            CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et.codingImplementation,20,4),cbgd.code,RIGHT(et.codingImplementation,6)) AS a_codingImplementation,
+            et.exerciseHierarchy AS a_exerciseHierarchy,
+            getTheItemName(dm.deptId, et.eventName, et.id) AS a_itemName,
+            getTheItemName(dm1.deptId, et1.eventName, et1.id) AS a_itemCatalogue,
+            dm.businessGuideState AS state,
+            dm.businessGuideState AS a_state,
+            c.departmentalMattersId,
+            td.title AS a_implementingOrgan,
+            c.implementingBody AS a_implementingBody,
+            c.typeOfProcessingTimeOrPlace AS a_typeOfProcessingTimeOrPlace,
+            c.processingTime AS a_processingTime,
+            c.placeOfProcessing AS a_placeOfProcessing,
+            c.addendumToProcessingTimeOrPlace AS a_addendumToProcessingTimeOrPlace,
+            c.numberOfVisitsToTheFieldHall AS a_numberOfVisitsToTheFieldHall,
+            c.handlingForm AS a_handlingForm,
+            c.webSiteOfOnlineServiceSystem AS a_webSiteOfOnlineServiceSystem,
+            c.processingWindow AS a_processingWindow,
+            c.enquiry AS a_enquiry,
+            c.advisoryPhone AS a_advisoryPhone,
+            c.serviceSupportHotline AS a_serviceSupportHotline,
+            c.advisoryAddress AS a_advisoryAddress,
+            c.complaintAddress AS a_complaintAddress,
+            c.remarks AS a_remarks
+        FROM business_guide_other_services_one AS a
+        LEFT JOIN departmental_matters dm ON dm.mappingId = a.eventId
+        LEFT JOIN events_table et ON dm.eventId = et.id
+        LEFT JOIN catalogue_event_type cet ON cet.id = et.eventType
+		LEFT JOIN events_table et1 ON et1.id = et.eventPid
+        LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+        LEFT JOIN business_guide_other_services_one_private c ON dm.id = c.departmentalMattersId
+        LEFT JOIN t_department td ON td.id = dm.deptId
+        LEFT JOIN central_business_guidance_department_code cbgd ON cbgd.id = td.central_departments
+        WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findBusinessGuide" parameterType="java.lang.String" resultMap="BusinessGuideOtherServicesOne">
+        SELECT * FROM business_guide_other_services_one
+        WHERE eventId = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="showInfo"  parameterType="java.lang.String"  resultMap="BusinessGuideOtherServicesOneReq" >
+        SELECT
+            et.serviceObject AS a_serviceObject,
+            et.itemSmallType AS a_itemSmallType,
+            cet.name AS a_majorTypesOfEvents,
+            CONCAT(LEFT(et.baseDirectoryEncoding,4),cbgd.code,RIGHT(et.baseDirectoryEncoding,6)) AS a_basicCoding,
+            CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et.codingImplementation,20,4),cbgd.code,RIGHT(et.codingImplementation,6)) AS a_codingImplementation,
+            et.exerciseHierarchy AS a_exerciseHierarchy,
+            getTheItemName(dm.deptId, et.eventName, et.id) AS a_itemName,
+            getTheItemName(dm1.deptId, et1.eventName, et1.id) AS a_itemCatalogue,
+            a.id,
+            a.eventId,
+            a.creationTime,
+            a.updateTime,
+            a.userName,
+            a.itemCatalogue,
+            a.basicCoding,
+            a.codingImplementation,
+            a.ItemName,
+            a.implementingOrgan,
+            a.implementingBody,
+            a.serviceObject,
+            a.itemSmallType,
+            a.timeLimitType,
+            a.commitmenTimeLimit,
+            a.statementOfCommitmentDeadline,
+            a.charge,
+            a.chargingStandard,
+            a.chargingBasis,
+            a.paymentMethod,
+            a.methodOfDeliveryOfApplicationMaterials,
+            a.webSiteOfOnlineServiceSystem,
+            a.numberOfVisitsToTheFieldHall,
+            a.typeOfProcessingTimeOrPlace,
+            a.processingTime,
+            a.PlaceOfProcessing,
+            a.addendumToProcessingTimeOrPlace,
+            a.processingWindow,
+            a.intermediaryService,
+            a.enquiry,
+            a.commonProblem,
+            a.acceptingConditions,
+            a.handlingBasis,
+            a.serviceRestrictions,
+            a.serviceTimeConstraint,
+            a.serviceFrequencyRestriction,
+            a.remarks,
+            a.otherServiceRestrictions,
+            a.consultationApproach,
+            a.advisoryAddress,
+            a.serviceSupportHotline,
+            a.complaintChannels,
+            a.complaintAddress,
+            a.itemSequencing,
+            a.applicationMaterials,
+            a.materialSubmissionStatement,
+            a.resultType,
+            a.resultName,
+            a.havaResultSample,
+            a.resultSample,
+            a.serviceTopic,
+            a.supportOnlinePayment,
+            a.isSupportLogistics,
+            a.exerciseHierarchy,
+            a.typeOfOffice,
+            a.handlingForm,
+            c.departmentalMattersId,
+            td.title AS a_implementingOrgan,
+            c.implementingBody AS a_implementingBody,
+            c.typeOfProcessingTimeOrPlace AS a_typeOfProcessingTimeOrPlace,
+            c.processingTime AS a_processingTime,
+            c.placeOfProcessing AS a_placeOfProcessing,
+            c.addendumToProcessingTimeOrPlace AS a_addendumToProcessingTimeOrPlace,
+            c.numberOfVisitsToTheFieldHall AS a_numberOfVisitsToTheFieldHall,
+            c.handlingForm AS a_handlingForm,
+            c.webSiteOfOnlineServiceSystem AS a_webSiteOfOnlineServiceSystem,
+            c.processingWindow AS a_processingWindow,
+            c.enquiry AS a_enquiry,
+            c.advisoryPhone AS a_advisoryPhone,
+            c.serviceSupportHotline AS a_serviceSupportHotline,
+            c.advisoryAddress AS a_advisoryAddress,
+            c.complaintAddress AS a_complaintAddress,
+            c.remarks AS a_remarks
+        FROM business_guide_other_services_one AS a
+        LEFT JOIN departmental_matters dm ON dm.mappingId = a.eventId
+        LEFT JOIN events_table et ON dm.eventId = et.id
+        LEFT JOIN catalogue_event_type cet ON cet.code = et.eventType
+		LEFT JOIN events_table et1 ON et1.id = et.eventPid
+        LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+        LEFT JOIN business_guide_other_services_one_private c ON dm.id = c.departmentalMattersId
+        LEFT JOIN t_department td ON td.id = dm.deptId
+        LEFT JOIN central_business_guidance_department_code cbgd ON cbgd.id = td.central_departments
+        WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String" >
+        DELETE FROM  business_guide_other_services_one WHERE eventId = (
+        SELECT mappingId FROM departmental_matters AS dm WHERE dm.id = #{eventId,jdbcType=VARCHAR})
+    </delete>
+</mapper>

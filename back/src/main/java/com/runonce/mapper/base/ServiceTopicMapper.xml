@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.base.ServiceTopicDao">
+
+    <resultMap id="ServiceTopic" type="com.runonce.model.base.ServiceTopic" >
+        <result column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="count" property="count" />
+        <result column="remarks" property="remarks" />
+    </resultMap>
+
+    <select id="findByPid" parameterType="java.lang.String" resultType="java.lang.String">
+          SELECT topicId FROM service_modle WHERE objectId = #{objectId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCode" parameterType="java.lang.String" resultType="com.runonce.model.base.ServiceTopic">
+        SELECT * FROM service_topic WHERE code = #{code,jdbcType=VARCHAR}
+    </select>
+    <select id="sendTopic" resultType="com.runonce.httpbean.assets.reqbean.ServiceTopic">
+
+    SELECT
+      id AS fTopicId,
+	  id AS fImportId,
+	  `name` AS fTopicName,
+	  remarks AS fTopicRemarks
+    FROM
+	  service_topic
+    </select>
+    <select id="sendObjectTopic" resultType="com.runonce.httpbean.assets.reqbean.ObjectTopic">
+
+
+    SELECT
+	  objectId AS fObjectId,
+	  topicId AS fTopicId
+    FROM
+	  service_modle
+
+    </select>
+
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.MaterialGroupingDao">
+
+    <resultMap id="MaterialGrouping" type="com.runonce.model.eventversionone.MaterialGrouping">
+        <result column="id" property="id"/>
+        <result column="eventId" property="eventId"/>
+        <result column="orderNum" property="orderNum"/>
+        <result column="type" property="type"/>
+        <result column="number" property="number"/>
+        <result column="io" property="io"/>
+        <result column="name" property="name"/>
+        <result column="originalScriptProvide" jdbcType="BIT" property="originalScriptProvide"/>
+        <result column="copyProvide" jdbcType="BIT" property="copyProvide"/>
+        <result column="electronicProvide" jdbcType="BIT" property="electronicProvide"/>
+        <result column="originalScriptOutput" jdbcType="BIT" property="originalScriptOutput"/>
+        <result column="electronicOutput" jdbcType="BIT" property="electronicOutput"/>
+        <result column="count" property="count"/>
+        <result column="isItIndispensable" jdbcType="BIT" property="isItIndispensable"/>
+        <result column="provideWay" property="provideWay"/>
+        <result column="source" property="source"/>
+        <result column="departmrntName" property="departmrntName"/>
+        <result column="departmrntSystemName" property="departmrntSystemName"/>
+        <result column="departmrntSystemUrl" property="departmrntSystemUrl"/>
+        <result column="remarks" property="remarks"/>
+        <result column="primary" property="primary"/>
+    </resultMap>
+
+    <select id="findEventIdByMaterialId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT eventId FROM material_grouping WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByEventIdAndIo" resultType="com.runonce.model.http.MaterialGroupAddParam">
+        SELECT
+        id,
+        eventId,
+        orderNum,
+        `type`,
+        `number`,
+        io,
+        `name`,
+        originalScriptProvide,
+        copyProvide,
+        electronicProvide,
+        originalScriptOutput,
+        electronicOutput,
+        `count`,
+        isItIndispensable,
+        provideWay,
+        source,
+        departmrntName,
+        departmrntSystemName,
+        departmrntSystemUrl,
+        remarks,
+        sampleTable,
+        emptyTable,
+        preAcceptance,
+        (CASE WHEN  cancelMerge = '可通过数据共享进行减免'  THEN  TRUE  ELSE FALSE END)AS isStreamlining,
+        (CASE WHEN  cancelMerge = '可通过数据共享进行减免'  THEN  belongUnit  END)AS belongUnit,
+        <![CDATA[ (CASE WHEN  cancelMerge <> '可通过数据共享进行减免'  THEN  cancelMerge  END)]]>AS cancelMerge,
+        receivePersonReview,
+        receivePersonReviewWay,
+        approverReview,
+        approverReviewWay
+        FROM
+          material_grouping
+        WHERE eventId  = #{eventId,jdbcType=VARCHAR}
+        AND io =  #{io,jdbcType=VARCHAR}
+        ORDER BY orderNum
+
+    </select>
+</mapper>

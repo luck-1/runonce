@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.base.ServiceBusinessguideiModleDao">
+
+    <resultMap id="ServiceBusinessguideiModle" type="com.runonce.model.base.ServiceBusinessguideiModle" >
+        <result column="id" property="id" />
+        <result column="businessGuideId" property="businessGuideId" />
+        <result column="serviceObjectId" property="serviceObjectId" />
+    </resultMap>
+
+    <select id="findServiceObject" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT id FROM service_object WHERE code  IN (
+        SELECT serviceObjectId FROM service_businessguidei_modle WHERE businessGuideId = #{businessGuideId,jdbcType=VARCHAR})
+    </select>
+
+    <select id="findBusinessguideiModle" parameterType="java.lang.String" resultType="com.runonce.model.base.ServiceBusinessguideiModle">
+        SELECT * FROM service_businessguidei_modle WHERE businessGuideId = #{businessGuideId,jdbcType=VARCHAR}
+    </select>
+</mapper>

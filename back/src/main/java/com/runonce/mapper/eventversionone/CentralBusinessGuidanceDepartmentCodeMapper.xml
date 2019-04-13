@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.CentralBusinessGuidanceDepartmentCodeDao">
+
+    <resultMap id="CentralBusinessGuidanceDepartmentCode" type="com.runonce.model.eventversionone.CentralBusinessGuidanceDepartmentCode" >
+        <result column="`id`" property="id" />
+        <result column="`code`" property="code" />
+        <result column="`name`" property="name" />
+        <result column="`fillName`" property="fillName" />
+    </resultMap>
+</mapper>

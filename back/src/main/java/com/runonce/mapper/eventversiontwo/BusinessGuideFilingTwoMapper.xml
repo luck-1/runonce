@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversiontwo.BusinessGuideFilingTwoDao">
+
+    <resultMap id="BusinessGuideFilingTwo" type="com.runonce.model.eventversiontwo.BusinessGuideFilingTwo" >
+        <result column="id" property="id" />
+        <result column="eventID" property="eventID" />
+        <result column="type" property="type" />
+        <result column="creationTime" property="creationTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="userName" property="userName" />
+        <result column="majorTypesOfEvents" property="majorTypesOfEvents" />
+        <result column="ItemSmallType" property="itemSmallType" />
+        <result column="ftaMatters" property="ftaMatters" />
+        <result column="transactionDirectory" property="transactionDirectory" />
+        <result column="basicCoding" property="basicCoding" />
+        <result column="codingImplementation" property="codingImplementation" />
+        <result column="itemName" property="itemName" />
+        <result column="sourceOfPower" property="sourceOfPower" />
+        <result column="implementingOrgan" property="implementingOrgan" />
+        <result column="natureOfImplementingSubject" property="natureOfImplementingSubject" />
+        <result column="implementingBody" property="implementingBody" />
+        <result column="serviceObject" property="serviceObject" />
+        <result column="serviceTopic" property="serviceTopic" />
+        <result column="permissionDivision" property="permissionDivision" />
+        <result column="detailedPermissionDivision" property="detailedPermissionDivision" />
+        <result column="typeOfOffice" property="typeOfOffice" />
+        <result column="exerciseHierarchy" property="exerciseHierarchy" />
+        <result column="timeLimitType" property="timeLimitType" />
+        <result column="statutoryDeadlines" property="statutoryDeadlines" />
+        <result column="statutoryTimeLimitForCompletion" property="statutoryTimeLimitForCompletion" />
+        <result column="commitmentTimeLimit" property="commitmentTimeLimit" />
+        <result column="statementOfCommitmentDeadline" property="statementOfCommitmentDeadline" />
+        <result column="jointAgency" property="jointAgency" />
+        <result column="applicationOfJointOrganizations" property="applicationOfJointOrganizations" />
+        <result column="charge" property="charge" />
+        <result column="chargingStandard" property="chargingStandard" />
+        <result column="chargingBasis" property="chargingBasis" />
+        <result column="paymentMethod" property="paymentMethod" />
+        <result column="methodOfDeliveryOfApplicationMaterials" property="methodOfDeliveryOfApplicationMaterials" />
+        <result column="onlineServiceSystem" property="onlineServiceSystem" />
+        <result column="webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem" />
+        <result column="declarationAddressOfEnterpriseInvestmentProjects" property="declarationAddressOfEnterpriseInvestmentProjects" />
+        <result column="concierge" property="concierge" />
+        <result column="scopeOfOperation" property="scopeOfOperation" />
+        <result column="handlingForm" property="handlingForm" />
+        <result column="onlineApplicationForm" property="onlineApplicationForm" />
+        <result column="numberOfVisitsToTheFieldHall" property="numberOfVisitsToTheFieldHall" />
+        <result column="eventStar" property="eventStar" />
+        <result column="typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace" />
+        <result column="processingTime" property="processingTime" />
+        <result column="placeOfProcessing" property="placeOfProcessing" />
+        <result column="addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace" />
+        <result column="processingWindow" property="processingWindow" />
+        <result column="appointmentProcessing" property="appointmentProcessing" />
+        <result column="quantitativeRestriction" property="quantitativeRestriction" />
+        <result column="intermediaryService" property="intermediaryService" />
+        <result column="prePublicationPublicity" property="prePublicationPublicity" />
+        <result column="enquiry" property="enquiry" />
+        <result column="commonProblem" property="commonProblem" />
+        <result column="theRightsAndObligationsOfTheApplicant" property="theRightsAndObligationsOfTheApplicant" />
+        <result column="acceptingConditions" property="acceptingConditions" />
+        <result column="SettingBasis" property="settingBasis" />
+        <result column="handlingBasis" property="handlingBasis" />
+        <result column="exerciseContent" property="exerciseContent" />
+        <result column="administrativeReconsiderationAdministrativeLitigation" property="administrativeReconsiderationAdministrativeLitigation" />
+        <result column="remarks" property="remarks" />
+        <result column="consultationApproach" property="consultationApproach" />
+        <result column="advisoryAddress" property="advisoryAddress" />
+        <result column="serviceSupportHotline" property="serviceSupportHotline" />
+        <result column="complaintChannels" property="complaintChannels" />
+        <result column="complaintAddress" property="complaintAddress" />
+        <result column="itemSequencing" property="itemSequencing" />
+        <result column="materialSubmissionStatement" property="materialSubmissionStatement" />
+        <result column="acceptAndApprove" property="acceptAndApprove" />
+        <result column="timeLimitForAcceptance" property="timeLimitForAcceptance" />
+        <result column="correctionOrCorrection" property="correctionOrCorrection" />
+        <result column="timeLimitForCorrection" property="timeLimitForCorrection" />
+        <result column="acceptanceResult" property="acceptanceResult" />
+        <result column="correctionOfResults" property="correctionOfResults" />
+        <result column="refuseToAccept" property="refuseToAccept" />
+        <result column="modeOfExamination" property="modeOfExamination" />
+        <result column="reviewStandard" property="reviewStandard" />
+        <result column="examinationResult" property="examinationResult" />
+        <result column="timeLimitRorReview" property="timeLimitRorReview" />
+        <result column="decisionTimeLimit" property="decisionTimeLimit" />
+        <result column="legalBasisAndDescriptionSpecial" property="legalBasisAndDescriptionSpecial" />
+        <result column="requiredTimeLimitSpecial" property="requiredTimeLimitSpecial" />
+        <result column="statutoryCompletionTimeLimitSpecial" property="statutoryCompletionTimeLimitSpecial" />
+        <result column="chargeSpecial" property="chargeSpecial" />
+        <result column="chargeBasisAndDescriptionSpecial" property="chargeBasisAndDescriptionSpecial" />
+        <result column="processFlowChart" property="processFlowChart" />
+        <result column="processDescription" property="processDescription" />
+        <result column="resultType" property="resultType" />
+        <result column="resultName" property="resultName" />
+        <result column="resultSample" property="resultSample" />
+        <result column="annualExaminationOrAnnualInspection" property="annualExaminationOrAnnualInspection" />
+        <result column="numberOfAnnualOrAnnualReviews" property="numberOfAnnualOrAnnualReviews" />
+        <result column="decidedToMakePublic" property="decidedToMakePublic" />
+        <result column="serviceRoute" property="serviceRoute" />
+    </resultMap>
+    <select id="findByEventId" parameterType="java.lang.String" resultType="com.runonce.model.eventversiontwo.BusinessGuideFilingTwo">
+        SELECT
+            f_catalogue_event_type(a.majorTypesOfEvents)  as majorTypesOfEvents ,
+            f_catalogue_item_subtype(a.itemSmallType)  as itemSmallType ,
+            f_permission_division(a.sourceOfPower)  as sourceOfPower ,
+            f_service_object(a.serviceObject)  as serviceObject ,
+            f_service_topic(a.serviceTopic)  as  serviceTopic,
+            f_permission_division(a.permissionDivision)  as  permissionDivision,
+            f_nature_of_implementing_subject(a.natureOfImplementingSubject)  as  natureOfImplementingSubject,
+            f_exercise_hierarchy(a.exerciseHierarchy)  as exerciseHierarchy ,
+            f_type_of_office(a.typeOfOffice)  as  typeOfOffice,
+            f_annual_review_or_view(a.annualExaminationOrAnnualInspection)  as  numberOfAnnualOrAnnualReviews,
+            f_concierge(a.concierge)  as  concierge,
+            f_scope_of_operation(a.scopeOfOperation)  as scopeOfOperation ,
+            f_handling_form(a.handlingForm)  as handlingForm ,
+            f_online_application_form(a.onlineApplicationForm)  as  onlineApplicationForm,
+            f_event_star(a.eventStar)  as eventStar ,
+            f_appointment_processing(a.appointmentProcessing)  as appointmentProcessing ,
+            f_pre_publication_publicity(a.prePublicationPublicity)  as prePublicationPublicity ,
+            f_decided_to_make_public(a.decidedToMakePublic)  as decidedToMakePublic
+        FROM business_guide_filing_two a
+        WHERE eventId = #{eventId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByEventId" parameterType="java.lang.String" >
+        DELETE FROM  business_guide_filing_two WHERE eventID=#{eventID}
+    </delete>
+
+</mapper>

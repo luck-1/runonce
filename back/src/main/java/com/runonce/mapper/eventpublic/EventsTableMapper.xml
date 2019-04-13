@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventpublic.EventsTableDao">
+
+    <resultMap id="EventsTable" type="com.runonce.model.eventpublic.EventsTable">
+        <result column="id" property="id"/>
+        <result column="depId" property="depId"/>
+        <result column="eventName" property="eventName"/>
+        <result column="eventNumber" property="eventNumber"/>
+        <result column="eventType" property="eventType"/>
+        <result column="eventPid" property="eventPid"/>
+        <result column="isMin" property="isMin"/>
+        <result column="eventState" property="eventState"/>
+        <result column="eventCreateTime" property="eventCreateTime"/>
+        <result column="eventUpdateTime" property="eventUpdateTime"/>
+        <result column="baseDirectoryEncoding" property="baseDirectoryEncoding"/>
+        <result column="directoryEncoding" property="directoryEncoding"/>
+        <result column="exerciseHierarchy" property="exerciseHierarchy"/>
+        <result column="implementingOrgan" property="implementingOrgan"/>
+        <result column="itemSmallType" property="itemSmallType"/>
+        <result column="codingImplementation" property="codingImplementation"/>
+        <result column="serviceObject" property="serviceObject"/>
+        <result column="genericName" property="genericName"/>
+        <result column="directoryName" property="directoryName"/>
+        <result column="settingBasis" property="settingBasis"/>
+        <result column="remarks" property="remarks"/>
+        <result column="directorySorting" property="directorySorting"/>
+    </resultMap>
+
+    <select id="findDirectory" resultType="com.runonce.model.eventpublic.EventsTable">
+        SELECT et.* FROM events_table AS et
+        INNER JOIN departmental_matters dm ON dm.eventId = et.id AND dm.groupId = #{groupId}
+        WHERE et.isMin = 0
+    </select>
+
+    <select id="selectByParam" resultType="com.runonce.model.eventpublic.EventsTable">
+        SELECT * FROM events_table t
+        WHERE
+        1 = 1
+        AND eventPid = '0'
+        <!--<if test="param.eventType!=null ">-->
+        <!--and  t.eventType=#{param.eventType,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="param.eventName!=null and param.eventName!= '' ">-->
+        <!--and  t.eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')-->
+        <!--</if>-->
+        <if test="(param.eventName!=null and ''!=param.eventName ) || param.eventType != null">
+            AND t.id IN (
+            SELECT eventPid FROM events_table WHERE
+            isMin = 1
+            <if test="param.eventName!=null and ''!=param.eventName">
+                AND eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="param.eventType!=null">
+                AND eventType = #{param.eventType}
+            </if>
+            UNION
+            SELECT id FROM events_table WHERE
+            isMin = 0
+            <if test="param.eventName!=null and ''!=param.eventName">
+                AND eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="param.eventType!=null">
+                AND eventType = #{param.eventType}
+            </if>
+            )
+        </if>
+    </select>
+    <select id="selectSecondLevelEvent" resultType="com.runonce.model.eventpublic.EventsTable">
+        SELECT * FROM events_table t
+        WHERE
+        1 = 1
+        AND eventPid = #{parentId,jdbcType=VARCHAR}
+        <if test="param.eventType!=null ">
+            and t.eventType=#{param.eventType,jdbcType=VARCHAR}
+        </if>
+        <if test="param.eventName!=null and param.eventName!= '' ">
+            and t.eventName LIKE CONCAT('%',#{param.eventName,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+    <select id="selectDistributedEvents" resultType="com.runonce.model.eventpublic.EventsTable"
+            parameterType="com.runonce.model.eventpublic.JointSectoralMatterReq">
+        SELECT
+            hello (dm1.deptId,et1.eventName,et1.id) AS eventName,
+            CONCAT(LEFT(et1.baseDirectoryEncoding,4),cbgd.code,RIGHT(et1.baseDirectoryEncoding,6)) AS baseDirectoryEncoding,
+            CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et1.codingImplementation,20,4),cbgd.code,RIGHT(et1.codingImplementation,6)) AS codingImplementation,
+            CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et1.codingImplementation,20,4),cbgd.code,RIGHT(et1.codingImplementation,6),RIGHT(et1.directoryEncoding,2)) AS directoryEncoding,
+            et1.eventName as eventNameId,
+            et1.id,
+            et1.depId,
+            et1.eventNumber,
+            et1.eventType,
+            et1.eventPid,
+            et1.isMin,
+            et1.itemSmallType,
+            et1.eventState,
+            et1.eventCreateTime,
+            et1.eventUpdateTime,
+            et1.exerciseHierarchy,
+            et1.implementingOrgan,
+            et1.genericName,
+            et1.directoryName,
+            et1.settingBasis,
+            et1.remarks,
+            et1.directorySorting,
+            et1.serviceObject,
+            dm1.isReproducible,
+            dm1.groupId AS groupId
+        FROM
+        (
+        SELECT DISTINCT
+        dm.groupId
+        FROM
+        events_table et,
+        departmental_matters dm
+        WHERE
+        1 = 1
+        AND et.id = dm.eventId
+
+        <if test="deptId!=null and deptId!= '' ">
+            AND dm.deptId = #{deptId}
+        </if>
+        <if test="eventName!=null and eventName!= '' ">
+            AND et.eventName LIKE CONCAT('%',#{eventName},'%')
+        </if>
+        <if test="eventType!=null and eventType!= '' ">
+            AND et.eventType = #{eventType}
+        </if>
+
+        LIMIT #{startRow},
+        #{pageSize}
+        ) AS dm
+        INNER JOIN departmental_matters AS dm1 ON dm1.groupId = dm.groupId
+        INNER JOIN events_table AS et1 ON dm1.eventId = et1.id
+        INNER JOIN t_department td ON td.id = dm1.deptId
+        INNER JOIN central_business_guidance_department_code cbgd ON cbgd.id = td.central_departments
+    </select>
+
+    <select id="selectDistributedEventsCount" resultType="java.lang.Integer"
+            parameterType="com.runonce.model.eventpublic.JointSectoralMatterReq">
+        SELECT
+        count(DISTINCT dm.groupId)
+        FROM
+        events_table et,
+        departmental_matters dm
+        WHERE
+        1 = 1
+        AND et.id = dm.eventId
+
+        <if test="deptId!=null and deptId!= '' ">
+            AND dm.deptId = #{deptId}
+        </if>
+        <if test="eventName!=null and eventName!= '' ">
+            AND et.eventName LIKE CONCAT(
+            '%',
+            #{eventName},'%')
+        </if>
+        <if test="eventType!=null and eventType!= '' ">
+            AND et.eventType = #{eventType}
+        </if>
+
+    </select>
+
+</mapper>

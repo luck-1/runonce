@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.EventDirectoryDao">
+
+    <resultMap id="EventDirectory" type="com.runonce.model.eventversionone.EventDirectory" >
+        <result column="id" property="id" />
+        <result column="implementatioDepartment" property="implementatioDepartment" />
+        <result column="bigTypesOfEvents" property="bigTypesOfEvents" />
+        <result column="itemSubtype" property="itemSubtype" />
+        <result column="genericName" property="genericName" />
+        <result column="provincialsSerialNumber" property="provincialsSerialNumber" />
+        <result column="provincialName" property="provincialName" />
+        <result column="municipalSerialNumber" property="municipalSerialNumber" />
+        <result column="municipalName" property="municipalName" />
+        <result column="countySerialnNmber" property="countySerialnNmber" />
+        <result column="nameOfCounty" property="nameOfCounty" />
+        <result column="establishmentBasis" property="establishmentBasis" />
+        <result column="remarks" property="remarks" />
+    </resultMap>
+
+    <select id="findEventDirectory" resultType="com.runonce.model.eventversionone.EventDirectory">
+        SELECT * FROM event_directory
+        WHERE 1=1
+        <if test="implementatioDepartment != null and implementatioDepartment != ''">
+          AND implementatioDepartment LIKE concat('%',#{implementatioDepartment,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="genericName != null and genericName != ''">
+          AND genericName LIKE concat('%',#{genericName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="provincialName != null and provincialName != ''">
+          AND provincialName LIKE concat('%',#{provincialName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="bigTypesOfEvents != null and bigTypesOfEvents != ''">
+          AND bigTypesOfEvents LIKE concat('%',#{bigTypesOfEvents,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="itemSubtype != null and itemSubtype != ''">
+            AND itemSubtype LIKE concat('%',#{itemSubtype,jdbcType=VARCHAR},'%')
+        </if>
+        Order By createTime DESC
+    </select>
+
+    <select id="findPrivate" resultType="com.runonce.model.eventversionone.EventDirectory">
+        SELECT ed.*,ed.municipalName AS name FROM event_directory AS ed WHERE ed.isPrivate = 1
+    </select>
+
+    <select id="findGroupIdCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM events_table a
+        LEFT JOIN event_directory b on a.eventName = b.id AND b.isPrivate = 0
+        WHERE a.eventName= #{municipalName} AND a.id != #{id}
+    </select>
+
+
+    <select id="findCatalogListByProvince" resultType="com.runonce.model.eventversionone.EventDirectory">
+
+        SELECT
+            ed.*,ed.provincialName as name
+        FROM
+            event_directory ed
+        WHERE
+            ed.provincialName != ''
+        AND ed.isPrivate = 0
+
+    </select>
+
+
+
+    <select id="findCatalogListByCity" resultType="com.runonce.model.eventversionone.EventDirectory">
+
+        SELECT
+            ed.*,ed.municipalName as name
+        FROM
+            event_directory ed
+        WHERE
+            ed.municipalName != ''
+        AND ed.isPrivate = 0
+
+
+    </select>
+
+
+    <select id="findCatalogListByArea" resultType="com.runonce.model.eventversionone.EventDirectory">
+
+        SELECT
+            ed.*,ed.nameOfCounty as name
+        FROM
+            event_directory ed
+        WHERE
+            ed.nameOfCounty != ''
+        AND ed.isPrivate = 0
+
+    </select>
+
+
+    <select id="findCatalogListByCurrency" resultType="com.runonce.model.eventversionone.EventDirectory">
+
+        SELECT
+            ed.*,ed.genericName as name
+        FROM
+            event_directory ed
+        WHERE
+            ed.genericName != ''
+
+
+    </select>
+
+    <select id="checkDirectoryIsUsed" resultType="java.lang.Integer" parameterType="java.lang.String">
+
+
+        SELECT count(*) FROM events_table WHERE eventName=#{Id}
+
+    </select>
+</mapper>

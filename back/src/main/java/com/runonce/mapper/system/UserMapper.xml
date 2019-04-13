@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.runonce.dao.system.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.runonce.model.system.User">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="location_id" property="locationId" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="street" property="street" jdbcType="VARCHAR"/>
+        <result column="pass_strength" property="passStrength" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <resultMap id="BaseFindInfoResultMap" type="com.runonce.model.system.User">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+        <result column="location_id" property="locationId" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="street" property="street" jdbcType="VARCHAR"/>
+        <result column="pass_strength" property="passStrength" jdbcType="VARCHAR"/>
+        <result column="departmentTitle" property="departmentTitle" jdbcType="VARCHAR"/>
+        <collection property="roles" ofType="com.runonce.model.system.Role">
+            <result column="role_id" property="id" jdbcType="VARCHAR"/>
+            <result column="role_create_by" property="createBy" jdbcType="VARCHAR"/>
+            <result column="role_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="role_update_by" property="updateBy" jdbcType="VARCHAR"/>
+            <result column="role_update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+            <result column="role_name" property="name" jdbcType="VARCHAR"/>
+            <result column="role_del_flag" property="delFlag" jdbcType="INTEGER"/>
+            <result column="role_default_role" property="defaultRole" jdbcType="BIT"/>
+            <result column="role_description" property="description" jdbcType="VARCHAR"/>
+            <result column="role_data_type" property="dataType" jdbcType="INTEGER"/>
+        </collection>
+        <collection property="permissions" ofType="com.runonce.model.system.Permission">
+            <result column="permission_id" property="id" jdbcType="VARCHAR"/>
+            <result column="permission_create_by" property="createBy" jdbcType="VARCHAR"/>
+            <result column="permission_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="permission_del_flag" property="delFlag" jdbcType="INTEGER"/>
+            <result column="permission_update_by" property="updateBy" jdbcType="VARCHAR"/>
+            <result column="permission_update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+            <result column="permission_description" property="description" jdbcType="VARCHAR"/>
+            <result column="permission_name" property="name" jdbcType="VARCHAR"/>
+            <result column="permission_parent_id" property="parentId" jdbcType="VARCHAR"/>
+            <result column="permission_type" property="type" jdbcType="INTEGER"/>
+            <result column="permission_sort_order" property="sortOrder" jdbcType="DECIMAL"/>
+            <result column="permission_component" property="component" jdbcType="VARCHAR"/>
+            <result column="permission_path" property="path" jdbcType="VARCHAR"/>
+            <result column="permission_title" property="title" jdbcType="VARCHAR"/>
+            <result column="permission_icon" property="icon" jdbcType="VARCHAR"/>
+            <result column="permission_level" property="level" jdbcType="INTEGER"/>
+            <result column="permission_button_type" property="buttonType" jdbcType="VARCHAR"/>
+            <result column="permission_status" property="status" jdbcType="INTEGER"/>
+            <result column="permission_url" property="url" jdbcType="VARCHAR"/>
+        </collection>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, create_by, create_time, update_by, update_time, address, avatar, description, 
+    email, mobile, nick_name, password, sex, status, type, user_name, del_flag, department_id, 
+    street, pass_strength
+    </sql>
+    <select id="findInfo" resultMap="BaseFindInfoResultMap">
+        SELECT
+        tu.*,
+        tr.id AS role_id,
+        tr.`name` AS role_name,
+        tr.description AS role_description,
+        tr.data_type AS role_data_type,
+        tr.default_role AS role_default_role,
+        tr.del_flag AS role_del_flag,
+        tr.create_by AS role_create_by,
+        tr.create_time AS role_create_time,
+        tr.update_by AS role_update_by,
+        tr.update_time AS role_update_time,
+        td.title AS departmentTitle,
+        tp.id AS permission_id,
+        tp.create_by AS permission_create_by,
+        tp.create_time AS permission_create_time,
+        tp.del_flag AS permission_del_flag,
+        tp.update_by AS permission_update_by,
+        tp.update_time AS permission_update_time,
+        tp.description AS permission_description,
+        tp.`name` AS permission_name,
+        tp.parent_id AS permission_parent_id,
+        tp.type AS permission_type,
+        tp.sort_order AS permission_sort_order,
+        tp.component AS permission_component,
+        tp.path AS permission_path,
+        tp.title AS permission_title,
+        tp.icon AS permission_icon,
+        tp.`level` AS permission_level,
+        tp.button_type AS permission_level,
+        tp.`status` AS permission_status,
+        tp.url AS permission_url
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        t_user AS tu
+        WHERE
+        1=1
+        <if test="deptList != null and deptList.size() > 0">
+            AND tu.department_id IN
+            <foreach collection="deptList" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="userReq.id  != null and ''!= userReq.id">
+            AND tu.id = #{userReq.id ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.address != null and ''!= userReq.address">
+            AND tu.address= #{userReq.address ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.description != null and ''!= userReq.description">
+            AND tu.description LIKE CONCAT('%',#{userReq.description ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.email != null and ''!= userReq.email">
+            AND tu.email LIKE CONCAT('%', #{userReq.email ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.mobile != null and ''!= userReq.mobile">
+            AND tu.mobile LIKE CONCAT('%',#{userReq.mobile ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.nickName != null and ''!= userReq.nickName">
+            AND tu.nick_name= #{userReq.nickName ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.sex != null" >
+            AND tu.sex= #{userReq.sex ,jdbcType=INTEGER}
+        </if>
+        <if test="userReq.status != null">
+            AND tu.status= #{userReq.status ,jdbcType=INTEGER}
+        </if>
+        <if test="userReq.type != null">
+            AND tu.type= #{userReq.type ,jdbcType=INTEGER}
+        </if>
+        <if test="userReq.userName != null and ''!= userReq.userName">
+            AND tu.user_name LIKE CONCAT('%', #{userReq.userName ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.departmentId != null and ''!= userReq.departmentId">
+            AND tu.department_id= #{userReq.departmentId ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.street != null and ''!= userReq.street">
+            AND tu.street= #{userReq.street ,jdbcType=VARCHAR}
+        </if>
+        ORDER BY
+        user_name
+        <if test="page !=null">
+            LIMIT
+            #{page.startRow,jdbcType=INTEGER},#{page.pageSize,jdbcType=INTEGER}
+        </if>
+        ) AS tu
+        LEFT JOIN t_user_role AS tur ON tu.id = tur.user_id
+        AND tur.del_flag = 0
+        LEFT JOIN t_role AS tr ON tur.role_id = tr.id
+        AND tr.del_flag = 0
+        LEFT JOIN t_role_permission AS trp ON trp.role_id = tr.id
+        AND trp.del_flag = 0
+        LEFT JOIN t_department AS td ON td.id = tu.department_id
+        AND td.del_flag = 0
+        LEFT JOIN t_permission AS tp ON tp.id = trp.permission_id
+        AND tp.del_flag = 0
+    </select>
+    <select id="findInfoCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT tu.id) AS countNum
+        FROM
+        t_user AS tu
+        LEFT JOIN t_user_role AS tur ON tu.id = tur.user_id
+        AND tur.del_flag = 0
+        LEFT JOIN t_role AS tr ON tur.role_id = tr.id
+        AND tr.del_flag = 0
+        WHERE
+        1=1
+        AND tu.del_flag = 0
+        <if test="deptList != null and deptList.size() > 0">
+            AND tu.department_id IN
+            <foreach collection="deptList" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="userReq.id  != null and ''!= userReq.id">
+            AND tu.id = #{userReq.id ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.address != null and ''!= userReq.address">
+            AND tu.address= #{userReq.address ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.description != null and ''!= userReq.description">
+            AND tu.description LIKE CONCAT('%',#{userReq.description ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.email != null and ''!= userReq.email">
+            AND tu.email LIKE CONCAT('%', #{userReq.email ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.mobile != null and ''!= userReq.mobile">
+            AND tu.mobile LIKE CONCAT('%',#{userReq.mobile ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.nickName != null and ''!= userReq.nickName">
+            AND tu.nick_name= #{userReq.nickName ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.sex != null" >
+            AND tu.sex= #{userReq.sex ,jdbcType=INTEGER}
+        </if>
+        <if test="userReq.status != null">
+            AND tu.status= #{userReq.status ,jdbcType=INTEGER}
+        </if>
+        <if test="userReq.type != null">
+            AND tu.type= #{userReq.type ,jdbcType=INTEGER}
+        </if>
+        <if test="userReq.userName != null and ''!= userReq.userName">
+            AND tu.user_name LIKE CONCAT('%', #{userReq.userName ,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userReq.departmentId != null and ''!= userReq.departmentId">
+            AND tu.department_id= #{userReq.departmentId ,jdbcType=VARCHAR}
+        </if>
+        <if test="userReq.street != null and ''!= userReq.street">
+            AND tu.street= #{userReq.street ,jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+</mapper>

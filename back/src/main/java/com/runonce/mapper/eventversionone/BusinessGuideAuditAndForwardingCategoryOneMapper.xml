@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.BusinessGuideAuditAndForwardingCategoryOneDao">
+
+    <resultMap id="BusinessGuideAuditAndForwardingCategoryOne" type="com.runonce.model.eventversionone.BusinessGuideAuditAndForwardingCategoryOne" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="type" property="type" />
+        <result column="creationTime" property="creationTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="userName" property="userName" />
+        <result column="firstInstanceOrgan" property="firstInstanceOrgan" />
+        <result column="nameOfProvincialFirstInspectionAuthority" property="nameOfProvincialFirstInspectionAuthority" />
+        <result column="nameOfMunicipalFirstInspectionAuthority" property="nameOfMunicipalFirstInspectionAuthority" />
+        <result column="nameOfPreliminaryInspectionOrgansAtCountyLevel" property="nameOfPreliminaryInspectionOrgansAtCountyLevel" />
+        <result column="courtOfFinalAppeal" property="courtOfFinalAppeal" />
+        <result column="nameOfCentralFinalAppealAuthority" property="nameOfCentralFinalAppealAuthority" />
+        <result column="nameOfProvincialFinalAppealAuthority" property="nameOfProvincialFinalAppealAuthority" />
+        <result column="serviceTopic" property="serviceTopic" />
+        <result column="nameOfMunicipalFinalAppealAuthority" property="nameOfMunicipalFinalAppealAuthority" />
+        <result column="reportingAndExaminationAndApprovalAuthority" property="reportingAndExaminationAndApprovalAuthority" />
+        <result column="nameOfCountyLevelTransferExaminationAndApprovalAuthority" property="nameOfCountyLevelTransferExaminationAndApprovalAuthority" />
+        <result column="nameOfMunicipalTransferExaminationAndApprovalAuthorities" property="nameOfMunicipalTransferExaminationAndApprovalAuthorities" />
+        <result column="nameOfProvincialTransferExaminationAndApprovalAuthority" property="nameOfProvincialTransferExaminationAndApprovalAuthority" />
+        <result column="statutoryCompletionTimeLimitAtCountyLevel" property="statutoryCompletionTimeLimitAtCountyLevel" />
+        <result column="municipalStatutoryDeadlineForCompletion" property="municipalStatutoryDeadlineForCompletion" />
+        <result column="provincialStatutoryCompletionTimeLimit" property="provincialStatutoryCompletionTimeLimit" />
+        <result column="timeLimitForFulfillingCountyLevelCommitments" property="timeLimitForFulfillingCountyLevelCommitments" />
+        <result column="municipalCommitmentCompletionTimelimit" property="municipalCommitmentCompletionTimeLimit" />
+        <result column="jointAgency" property="jointAgency" />
+        <result column="applicationOfJointOrganizations" property="applicationOfJointOrganizations" />
+        <result column="provincialCommitmentDeadline" property="provincialCommitmentDeadline" />
+        <result column="annualExaminationOrAnnualInspection" property="annualExaminationOrAnnualInspection" />
+        <result column="numberOfAnnualReviews" property="numberOfAnnualReviews" />
+        <result column="charge" property="charge" />
+        <result column="chargingStandard" property="chargingStandard" />
+        <result column="chargingBasis" property="chargingBasis" />
+        <result column="paymentMethod" property="paymentMethod" />
+        <result column="methodOfDeliveryOfApplicationMaterials" property="methodOfDeliveryOfApplicationMaterials" />
+        <result column="onlineServiceSystem" property="onlineServiceSystem" />
+        <result column="webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem" />
+        <result column="handlingResult" property="handlingResult" />
+        <result column="handlingForm" property="handlingForm" />
+        <result column="onlineApplicationForm" property="onlineApplicationForm" />
+        <result column="eventStar" property="eventStar" />
+        <result column="typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace" />
+        <result column="processingTime" property="processingTime" />
+        <result column="placeOfProcessing" property="placeOfProcessing" />
+        <result column="addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace" />
+        <result column="processingWindow" property="processingWindow" />
+        <result column="quantitativeRestriction" property="quantitativeRestriction" />
+        <result column="enquiry" property="enquiry" />
+        <result column="commonProblem" property="commonProblem" />
+        <result column="AcceptanceConditions" property="acceptanceConditions" />
+        <result column="settingBasis" property="settingBasis" />
+        <result column="remarks" property="remarks" />
+        <result column="consultationApproach" property="consultationApproach" />
+        <result column="serviceSupportHotline" property="serviceSupportHotline" />
+        <result column="itemSequencing" property="itemSequencing" />
+        <result column="materialSubmissionStatement" property="materialSubmissionStatement" />
+        <result column="intermediaryService" property="intermediaryService"/>
+        <result column="supportOnlinePayment" property="supportOnlinePayment"/>
+        <result column="isSupportLogistics" property="isSupportLogistics"/>
+        <result column="state" property="state"/>
+
+        <result column="a_serviceObject" property="serviceObject"/>
+        <result column="a_itemSmallType" property="itemSmallType" />
+        <result column="a_majorTypesOfEvents" property="majorTypesOfEvents" />
+        <result column="a_basicCoding" property="basicCoding"/>
+        <result column="a_exerciseHierarchy" property="exerciseHierarchy" />
+        <result column="a_codingImplementation" property="codingImplementation"/>
+        <result column="a_itemName" property="itemName" />
+        <result column="a_itemCatalogue" property="itemCatalogue" />
+        <!--<collection property="serviceObject" ofType="java.lang.String" column="id"-->
+                    <!--select="com.runonce.dao.base.ServiceBusinessguideiModleDao.findServiceObject">-->
+        <!--</collection>-->
+    </resultMap>
+
+    <resultMap id="BusinessGuideAuditAndForwardingCategoryOneReq"
+               type="com.runonce.httpbean.assets.reqbean.BusinessGuideAuditAndForwardingCategoryOneReq">
+        <association property="businessGuideAuditAndForwardingCategoryOne"
+                     javaType="com.runonce.model.eventversionone.BusinessGuideAuditAndForwardingCategoryOne"
+                     resultMap="BusinessGuideAuditAndForwardingCategoryOne">
+        </association>
+        <association property="businessGuideAuditAndForwardingCategoryOnePrivate"
+                     javaType="com.runonce.model.eventversionone.BusinessGuideAuditAndForwardingCategoryOnePrivate"
+                     resultMap="com.runonce.dao.eventversionone.BusinessGuideAuditAndForwardingCategoryOnePrivateDao.BaseResultMap">
+        </association>
+    </resultMap>
+
+    <select id="findByEventId" parameterType="java.lang.String" resultMap="BusinessGuideAuditAndForwardingCategoryOneReq">
+        	 SELECT a.*,
+				et.serviceObject AS a_serviceObject,
+                et.itemSmallType AS a_itemSmallType,
+                cet.`name` AS a_majorTypesOfEvents,
+                CONCAT(LEFT(et.baseDirectoryEncoding,4),cbgd.code,RIGHT(et.baseDirectoryEncoding,6)) AS a_basicCoding,
+                CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et.codingImplementation,20,4),cbgd.code,RIGHT(et.codingImplementation,6)) AS a_codingImplementation,
+                et.exerciseHierarchy AS a_exerciseHierarchy,
+                getTheItemName(dm.deptId, et.eventName, et.id) AS a_itemName,
+                getTheItemName(dm1.deptId, et1.eventName, et1.id) AS a_itemCatalogue,
+                dm.businessGuideState AS state,
+                dm.businessGuideState AS a_state,
+                c.departmentalMattersId,
+                c.jointAgency AS a_jointAgency,
+                c.applicationOfJointOrganizations AS a_applicationOfJointOrganizations,
+                c.webSiteOfOnlineServiceSystem AS a_webSiteOfOnlineServiceSystem,
+                c.onlineServiceSystem AS a_onlineServiceSystem,
+                c.handlingForm AS a_handlingForm,
+                c.onlineApplicationForm AS a_onlineApplicationForm,
+                c.typeOfProcessingTimeOrPlace AS a_typeOfProcessingTimeOrPlace,
+                c.processingTime AS a_processingTime,
+                c.placeOfProcessing AS a_placeOfProcessing,
+                c.addendumToProcessingTimeOrPlace AS a_addendumToProcessingTimeOrPlace,
+                c.processingWindow AS a_processingWindow,
+                c.enquiry AS a_enquiry,
+                c.advisoryPhone AS a_advisoryPhone,
+                c.serviceSupportHotline AS a_serviceSupportHotline,
+                c.itemSequencing AS a_itemSequencing,
+                c.remarks AS a_remarks
+            FROM business_guide_audit_and_forwarding_category_one AS a
+			LEFT JOIN departmental_matters dm ON dm.mappingId = a.eventId
+            LEFT JOIN events_table et ON dm.eventId = et.id
+            LEFT JOIN catalogue_event_type cet ON cet.id = et.eventType
+			LEFT JOIN events_table et1 ON et1.id = et.eventPid
+            LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+            LEFT JOIN business_guide_audit_and_forwarding_category_one_private c ON dm.id = c.departmentalMattersId
+            LEFT JOIN t_department td ON td.id = dm.deptId
+            LEFT JOIN central_business_guidance_department_code cbgd ON cbgd.id = td.central_departments
+            WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findBusinessGuide" parameterType="java.lang.String" resultMap="BusinessGuideAuditAndForwardingCategoryOne">
+        SELECT * FROM business_guide_audit_and_forwarding_category_one
+        WHERE eventId = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="showInfo"  parameterType="java.lang.String"  resultMap="BusinessGuideAuditAndForwardingCategoryOneReq" >
+        SELECT
+            et.serviceObject AS a_serviceObject,
+            et.itemSmallType AS a_itemSmallType,
+            cet.name AS a_majorTypesOfEvents,
+            CONCAT(LEFT(et.baseDirectoryEncoding,4),cbgd.code,RIGHT(et.baseDirectoryEncoding,6)) AS a_basicCoding,
+            CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et.codingImplementation,20,4),cbgd.code,RIGHT(et.codingImplementation,6)) AS a_codingImplementation,
+            et.exerciseHierarchy AS a_exerciseHierarchy,
+            getTheItemName(dm.deptId, et.eventName, et.id) AS a_itemName,
+            getTheItemName(dm1.deptId, et1.eventName, et1.id) AS a_itemCatalogue,
+            a.id,
+            a.eventId,
+            a.type,
+            a.creationTime,
+            a.updateTime,
+            a.userName,
+            a.itemCatalogue,
+            a.firstInstanceOrgan,
+            a.nameOfProvincialFirstInspectionAuthority,
+            a.itemName,
+            a.nameOfMunicipalFirstInspectionAuthority,
+            a.nameOfPreliminaryInspectionOrgansAtCountyLevel,
+            a.courtOfFinalAppeal,
+            a.nameOfCentralFinalAppealAuthority,
+            a.nameOfProvincialFinalAppealAuthority,
+            a.serviceObject,
+            a.itemSmallType,
+            a.serviceTopic,
+            a.nameOfMunicipalFinalAppealAuthority,
+            a.reportingAndExaminationAndApprovalAuthority,
+            a.nameOfCountyLevelTransferExaminationAndApprovalAuthority,
+            a.nameOfMunicipalTransferExaminationAndApprovalAuthorities,
+            a.nameOfProvincialTransferExaminationAndApprovalAuthority,
+            a.statutoryCompletionTimeLimitAtCountyLevel,
+            a.municipalStatutoryDeadlineForCompletion,
+            a.provincialStatutoryCompletionTimeLimit,
+            a.timeLimitForFulfillingCountyLevelCommitments,
+            a.municipalCommitmentCompletionTimelimit,
+            a.jointAgency,
+            a.applicationOfJointOrganizations,
+            a.provincialCommitmentDeadline,
+            a.numberOfAnnualReviews,
+            a.charge,
+            a.chargingStandard,
+            a.chargingBasis,
+            a.paymentMethod,
+            a.methodOfDeliveryOfApplicationMaterials,
+            a.onlineServiceSystem,
+            a.webSiteOfOnlineServiceSystem,
+            a.handlingResult,
+            a.typeOfProcessingTimeOrPlace,
+            a.processingTime,
+            a.placeOfProcessing,
+            a.addendumToProcessingTimeOrPlace,
+            a.processingWindow,
+            a.quantitativeRestriction,
+            a.enquiry,
+            a.commonProblem,
+            a.acceptanceConditions,
+            a.settingBasis,
+            a.remarks,
+            a.consultationApproach,
+            a.serviceSupportHotline,
+            a.itemSequencing,
+            a.materialSubmissionStatement,
+            a.basicCoding,
+            a.codingImplementation,
+            a.intermediaryService,
+            a.supportOnlinePayment,
+            a.isSupportLogistics,
+            es.name AS eventStar,
+            a.exerciseHierarchy,
+            a.annualExaminationOrAnnualInspection,
+            a.handlingForm,
+            a.onlineApplicationForm,
+            c.departmentalMattersId,
+            c.jointAgency AS a_jointAgency,
+            c.applicationOfJointOrganizations AS a_applicationOfJointOrganizations,
+            c.webSiteOfOnlineServiceSystem AS a_webSiteOfOnlineServiceSystem,
+            c.onlineServiceSystem AS a_onlineServiceSystem,
+            c.handlingForm AS a_handlingForm,
+            c.onlineApplicationForm AS a_onlineApplicationForm,
+            c.typeOfProcessingTimeOrPlace AS a_typeOfProcessingTimeOrPlace,
+            c.processingTime AS a_processingTime,
+            c.placeOfProcessing AS a_placeOfProcessing,
+            c.addendumToProcessingTimeOrPlace AS a_addendumToProcessingTimeOrPlace,
+            c.processingWindow AS a_processingWindow,
+            c.enquiry AS a_enquiry,
+            c.advisoryPhone AS a_advisoryPhone,
+            c.serviceSupportHotline AS a_serviceSupportHotline,
+            c.itemSequencing AS a_itemSequencing,
+            c.remarks AS a_remarks
+        FROM business_guide_audit_and_forwarding_category_one AS a
+        LEFT JOIN event_star es ON a.eventStar = es.code
+        LEFT JOIN departmental_matters dm ON dm.mappingId = a.eventId
+        LEFT JOIN events_table et ON dm.eventId = et.id
+        LEFT JOIN catalogue_event_type cet ON cet.code = et.eventType
+        LEFT JOIN events_table et1 ON et1.id = et.eventPid
+        LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+        LEFT JOIN business_guide_audit_and_forwarding_category_one_private c ON dm.id = c.departmentalMattersId
+        LEFT JOIN t_department td ON td.id = dm.deptId
+        LEFT JOIN central_business_guidance_department_code cbgd ON cbgd.id = td.central_departments
+        WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String" >
+        DELETE FROM business_guide_audit_and_forwarding_category_one WHERE eventId = (
+		SELECT mappingId FROM departmental_matters AS dm WHERE dm.id = #{eventId,jdbcType=VARCHAR})
+    </delete>
+</mapper>

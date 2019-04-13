@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.FormDescriptionDao">
+
+    <resultMap id="FormDescription" type="com.runonce.model.eventversionone.FormDescription">
+        <result column="id" property="id"/>
+        <result column="materialId" property="materialId"/>
+        <result column="number" property="number"/>
+        <result column="formName" property="formName"/>
+        <result column="fieldName" property="fieldName"/>
+        <result column="fieldGroup" property="fieldGroup"/>
+        <result column="fieldAttribute" property="fieldAttribute"/>
+        <result column="isExistenceOfPlural" property="isExistenceOfPlural"/>
+        <result column="isRequired" property="isRequired"/>
+        <result column="fillInInstructions" property="fillInInstructions"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+
+    <resultMap id="FormDescriptionInfoResultMap" type="com.runonce.httpbean.assets.resbean.FromDescriptionInfoRes">
+        <result column="formName" property="fromDescriptionName" jdbcType="VARCHAR"/>
+        <result column="sampleTable" property="fromDescriptionSampleTable" jdbcType="VARCHAR"/>
+        <collection property="formDescriptionList" column="materialId" resultMap="FormDescription">
+        </collection>
+
+    </resultMap>
+
+    <select id="findApplicationForm" resultType="com.runonce.model.eventversionone.MaterialGrouping">
+        SELECT * FROM material_grouping WHERE type = '申请表' AND eventId = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findPhoto" parameterType="java.lang.String"
+            resultType="com.runonce.model.eventpublic.BusinessFileRelation">
+        SELECT fileName,filePath FROM business_file_relation WHERE businessType = 1 AND businessId = #{businessId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findMaterial" parameterType="java.lang.String" resultType="com.runonce.model.eventversionone.FormDescription">
+        SELECT * FROM form_description WHERE materialId = #{materialId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAllMaterialByEventId" parameterType="java.lang.String" resultType="com.runonce.model.eventversionone.FormDescription">
+        SELECT * FROM form_description WHERE materialId IN (
+        SELECT id FROM material_grouping WHERE type = '申请表' AND eventId = #{eventId,jdbcType=VARCHAR})
+    </select>
+
+    <delete id="deleteByMaterialId" parameterType="java.lang.String">
+        DELETE FROM form_description WHERE materialId = #{materialId,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String">
+        DELETE FROM form_description WHERE materialId IN (
+        SELECT id FROM material_grouping WHERE type = '申请表' AND eventId = #{eventId,jdbcType=VARCHAR})
+    </delete>
+
+    <select id="selectFormDescriptionInfo" resultMap="FormDescriptionInfoResultMap">
+    SELECT
+	  fd.*
+	  ,mg.sampleTable
+    FROM
+	  form_description AS fd
+    INNER JOIN material_grouping AS mg
+    ON fd.materialId = mg.id
+	INNER JOIN  departmental_matters AS dm
+    ON mg.eventId = dm.id
+    WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+    AND mg.type = #{materialType,jdbcType=VARCHAR}
+    ORDER BY fd.materialId,fd.number
+    </select>
+</mapper>

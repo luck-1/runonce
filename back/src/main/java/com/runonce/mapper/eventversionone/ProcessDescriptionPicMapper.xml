@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.ProcessDescriptionPicDao">
+
+    <resultMap id="process_description_pic" type="com.runonce.model.eventversionone.ProcessDescriptionPic" >
+        <result column="id" property="id" />
+        <result column="eventId" property="eventId" />
+        <result column="picname" property="picname" />
+        <result column="picliu" property="picliu" />
+        <result column="picbase" property="picbase" />
+        <result column="conditionTemp" property="conditionTemp" />
+    </resultMap>
+    <select id="findByEventId" resultType="com.runonce.model.eventversionone.ProcessDescriptionPic">
+        select * from process_description_pic where eventId = #{eventId}
+    </select>
+    <update id="updateEvent" parameterType="com.runonce.model.eventversionone.ProcessDescriptionPic" >
+        update process_description_pic
+        set picname = #{picname},
+            picliu = #{picliu},
+            picbase = #{picbase}
+        where eventId =#{eventId}
+    </update>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String">
+        delete  from process_description_pic
+        where eventId =#{eventId}
+    </delete>
+</mapper>

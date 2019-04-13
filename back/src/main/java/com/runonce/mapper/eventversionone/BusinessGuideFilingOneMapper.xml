@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.BusinessGuideFilingOneDao">
+    <resultMap id="BusinessGuideFilingOne" type="com.runonce.model.eventversionone.BusinessGuideFilingOne" >
+        <result column="id" property="id"/>
+        <result column="eventId" property="eventId"/>
+        <result column="type" property="type"/>
+        <result column="creationTime" property="creationTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="userName" property="userName"/>
+        <result column="ftaMatters" property="ftaMatters"/>
+        <result column="sourceOfPower" property="sourceOfPower"/>
+        <result column="implementingOrgan" property="implementingOrgan"/>
+        <result column="natureOfImplementingSubject" property="natureOfImplementingSubject"/>
+        <result column="implementingBody" property="implementingBody"/>
+
+        <result column="serviceTopic" property="serviceTopic"/>
+        <result column="permissionDivision" property="permissionDivision"/>
+        <result column="detailedPermissionDivision" property="detailedPermissionDivision"/>
+        <result column="typeOfOffice" property="typeOfOffice"/>
+        <result column="timeLimitType" property="timeLimitType"/>
+        <result column="statutoryDeadlines" property="statutoryDeadlines"/>
+        <result column="statutoryTimeLimitForCompletion" property="statutoryTimeLimitForCompletion"/>
+        <result column="commitmentTimeLimit" property="commitmentTimeLimit"/>
+        <result column="statementOfCommitmentDeadline" property="statementOfCommitmentDeadline"/>
+        <result column="jointAgency" property="jointAgency"/>
+        <result column="applicationOfJointOrganizations" property="applicationOfJointOrganizations"/>
+        <result column="charge" property="charge"/>
+        <result column="chargingStandard" property="chargingStandard"/>
+        <result column="chargingBasis" property="chargingBasis"/>
+        <result column="paymentMethod" property="paymentMethod"/>
+        <result column="methodOfDeliveryOfApplicationMaterials" property="methodOfDeliveryOfApplicationMaterials"/>
+        <result column="onlineServiceSystem" property="onlineServiceSystem"/>
+        <result column="webSiteOfOnlineServiceSystem" property="webSiteOfOnlineServiceSystem"/>
+        <result column="declarationAddressOfEnterpriseInvestmentProjects"
+                property="declarationAddressOfEnterpriseInvestmentProjects"/>
+        <result column="concierge" property="concierge"/>
+        <result column="scopeOfOperation" property="scopeOfOperation"/>
+        <result column="handlingForm" property="handlingForm"/>
+        <result column="onlineApplicationForm" property="onlineApplicationForm"/>
+        <result column="numberOfVisitsToTheFieldHall" property="numberOfVisitsToTheFieldHall"/>
+        <result column="eventStar" property="eventStar"/>
+        <result column="typeOfProcessingTimeOrPlace" property="typeOfProcessingTimeOrPlace"/>
+        <result column="processingTime" property="processingTime"/>
+        <result column="placeOfProcessing" property="placeOfProcessing"/>
+        <result column="addendumToProcessingTimeOrPlace" property="addendumToProcessingTimeOrPlace"/>
+        <result column="processingWindow" property="processingWindow"/>
+        <result column="appointmentProcessing" property="appointmentProcessing"/>
+        <result column="quantitativeRestriction" property="quantitativeRestriction"/>
+        <result column="intermediaryService" property="intermediaryService"/>
+        <result column="prePublicationPublicity" property="prePublicationPublicity"/>
+        <result column="enquiry" property="enquiry"/>
+        <result column="commonProblem" property="commonProblem"/>
+        <result column="theRightsAndObligationsOfTheApplicant" property="theRightsAndObligationsOfTheApplicant"/>
+        <result column="acceptingConditions" property="acceptingConditions"/>
+        <result column="SettingBasis" property="settingBasis"/>
+        <result column="handlingBasis" property="handlingBasis"/>
+        <result column="exerciseContent" property="exerciseContent"/>
+        <result column="administrativeReconsiderationAdministrativeLitigation"
+                property="administrativeReconsiderationAdministrativeLitigation"/>
+        <result column="remarks" property="remarks"/>
+        <result column="consultationApproach" property="consultationApproach"/>
+        <result column="advisoryAddress" property="advisoryAddress"/>
+        <result column="serviceSupportHotline" property="serviceSupportHotline"/>
+        <result column="complaintChannels" property="complaintChannels"/>
+        <result column="complaintAddress" property="complaintAddress"/>
+        <result column="itemSequencing" property="itemSequencing"/>
+        <result column="materialSubmissionStatement" property="materialSubmissionStatement"/>
+        <result column="acceptAndApprove" property="acceptAndApprove"/>
+        <result column="timeLimitForAcceptance" property="timeLimitForAcceptance"/>
+        <result column="correctionOrCorrection" property="correctionOrCorrection"/>
+        <result column="timeLimitForCorrection" property="timeLimitForCorrection"/>
+        <result column="acceptanceResult" property="acceptanceResult"/>
+        <result column="correctionOfResults" property="correctionOfResults"/>
+        <result column="refuseToAccept" property="refuseToAccept"/>
+        <result column="modeOfExamination" property="modeOfExamination"/>
+        <result column="reviewStandard" property="reviewStandard"/>
+        <result column="examinationResult" property="examinationResult"/>
+        <result column="timeLimitRorReview" property="timeLimitRorReview"/>
+        <result column="decisionTimeLimit" property="decisionTimeLimit"/>
+        <result column="legalBasisAndDescriptionSpecial" property="legalBasisAndDescriptionSpecial"/>
+        <result column="requiredTimeLimitSpecial" property="requiredTimeLimitSpecial"/>
+        <result column="statutoryCompletionTimeLimitSpecial" property="statutoryCompletionTimeLimitSpecial"/>
+        <result column="chargeSpecial" property="chargeSpecial"/>
+        <result column="chargeBasisAndDescriptionSpecial" property="chargeBasisAndDescriptionSpecial"/>
+        <result column="processFlowChart" property="processFlowChart"/>
+        <result column="processDescription" property="processDescription"/>
+        <result column="resultType" property="resultType"/>
+        <result column="resultName" property="resultName"/>
+        <result column="resultSample" property="resultSample"/>
+        <result column="annualExaminationOrAnnualInspection" property="annualExaminationOrAnnualInspection"/>
+        <result column="numberOfAnnualOrAnnualReviews" property="numberOfAnnualOrAnnualReviews"/>
+        <result column="decidedToMakePublic" property="decidedToMakePublic"/>
+        <result column="serviceRoute" property="serviceRoute"/>
+        <result column="materialApplication" property="materialApplication"/>
+        <result column="state" property="state"/>
+
+        <result column="a_serviceObject" property="serviceObject"/>
+        <result column="a_ItemSmallType" property="itemSmallType"/>
+        <result column="a_majorTypesOfEvents" property="majorTypesOfEvents"/>
+        <result column="a_basicCoding" property="basicCoding"/>
+        <result column="a_exerciseHierarchy" property="exerciseHierarchy"/>
+        <result column="a_codingImplementation" property="codingImplementation"/>
+        <result column="a_transactionDirectory" property="transactionDirectory"/>
+        <result column="a_itemName" property="itemName"/>
+        <!--<collection property="serviceObject" ofType="java.lang.String" column="id"-->
+        <!--select="com.runonce.dao.base.ServiceBusinessguideiModleDao.findServiceObject">-->
+        <!--</collection>-->
+    </resultMap>
+
+    <resultMap id="BusinessGuideFilingOneReq"
+               type="com.runonce.httpbean.assets.reqbean.BusinessGuideFilingOneReq">
+        <association property="businessGuideFilingOne"
+                     javaType="com.runonce.model.eventversionone.BusinessGuideFilingOne"
+                     resultMap="BusinessGuideFilingOne">
+        </association>
+        <association property="businessGuideFilingOnePrivate"
+                     javaType="com.runonce.model.eventversionone.BusinessGuideFilingOnePrivate"
+                     resultMap="com.runonce.dao.eventversionone.BusinessGuideFilingOnePrivateDao.BaseResultMap">
+        </association>
+    </resultMap>
+
+    <select id="findByEventId" parameterType="java.lang.String" resultMap="BusinessGuideFilingOneReq">
+        SELECT a.*,
+            et.serviceObject AS a_serviceObject,
+            cet.`name` AS a_itemSmallType,
+            et.eventType AS a_majorTypesOfEvents,
+            et.baseDirectoryEncoding AS a_basicCoding,
+            CONCAT(LEFT(et.baseDirectoryEncoding,4),cbgd.code,RIGHT(et.baseDirectoryEncoding,6)) AS a_basicCoding,
+            CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et.codingImplementation,20,4),cbgd.code,RIGHT(et.codingImplementation,6)) AS a_codingImplementation,
+            getTheItemName(dm.deptId, et.eventName, et.id) AS a_itemName,
+            getTheItemName(dm1.deptId, et1.eventName, et1.id) AS a_transactionDirectory,
+            dm.businessGuideState AS state,
+            dm.businessGuideState AS a_state,
+            c.departmentalMattersId,
+            td.title AS a_implementingOrgan,
+            c.natureOfImplementingSubject AS a_natureOfImplementingSubject,
+            c.implementingBody AS a_implementingBody,
+            c.typeOfOffice AS a_typeOfOffice,
+            c.jointAgency AS a_jointAgency,
+            c.applicationOfJointOrganizations AS a_applicationOfJointOrganizations,
+            c.supportOnlinePayment AS a_supportOnlinePayment,
+            c.isSupportLogistics AS a_isSupportLogistics,
+            c.onlineServiceSystem AS a_onlineServiceSystem,
+            c.webSiteOfOnlineServiceSystem AS a_webSiteOfOnlineServiceSystem,
+            c.declarationAddressOfEnterpriseInvestmentProjects AS a_declarationAddressOfEnterpriseInvestmentProjects,
+            c.handlingForm AS a_handlingForm,
+            c.onlineApplicationForm AS a_onlineApplicationForm,
+            c.processingTime AS a_processingTime,
+            c.placeOfProcessing AS a_placeOfProcessing,
+            c.processingWindow AS a_processingWindow,
+            c.appointmentProcessing AS a_appointmentProcessing,
+            c.enquiry AS a_enquiry,
+            c.advisoryPhone AS a_advisoryPhone,
+            c.serviceSupportHotline AS a_serviceSupportHotline,
+            c.advisoryAddress AS a_advisoryAddress,
+            c.complaintAddress AS a_complaintAddress,
+            c.deliversUserAndWindow AS a_deliversUserAndWindow
+        FROM business_guide_filing_one AS a
+        LEFT JOIN departmental_matters dm ON dm.mappingId = a.eventId
+        LEFT JOIN events_table et ON dm.eventId = et.id
+        LEFT JOIN catalogue_event_type cet ON cet.id = et.eventType
+		LEFT JOIN events_table et1 ON et1.id = et.eventPid
+        LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+        LEFT JOIN business_guide_filing_one_private c ON dm.id = c.departmentalMattersId
+        LEFT JOIN t_department td ON td.id = dm.deptId
+        LEFT JOIN central_business_guidance_department_code cbgd ON cbgd.id = td.central_departments
+        WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findBusinessGuide" parameterType="java.lang.String" resultMap="BusinessGuideFilingOne">
+        SELECT * FROM business_guide_filing_one
+        WHERE eventId = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="showInfo"  parameterType="java.lang.String"  resultMap="BusinessGuideFilingOneReq" >
+        SELECT
+            et.serviceObject AS a_serviceObject,
+            et.itemSmallType AS a_itemSmallType,
+            cet.name AS a_majorTypesOfEvents,
+            CONCAT(LEFT(et.baseDirectoryEncoding,4),cbgd.code,RIGHT(et.baseDirectoryEncoding,6)) AS a_basicCoding,
+            CONCAT(td.social_credit_code,td.region+1,SUBSTRING(et.codingImplementation,20,4),cbgd.code,RIGHT(et.codingImplementation,6)) AS a_codingImplementation,
+            et.exerciseHierarchy AS a_exerciseHierarchy,
+            getTheItemName(dm.deptId, et.eventName, et.id) AS a_itemName,
+            getTheItemName(dm1.deptId, et1.eventName, et1.id) AS a_transactionDirectory,
+            a.id,
+            a.eventId,
+            a.type,
+            a.creationTime,
+            a.updateTime,
+            a.userName,
+            a.ftaMatters,
+            a.transactionDirectory,
+            a.basicCoding,
+            a.codingImplementation,
+            a.itemName,
+            a.implementingOrgan,
+            a.implementingBody,
+            a.serviceObject,
+            a.itemSmallType,
+            a.serviceTopic,
+            a.detailedPermissionDivision,
+            a.timeLimitType,
+            a.statutoryDeadlines,
+            a.statutoryTimeLimitForCompletion,
+            a.commitmentTimeLimit,
+            a.statementOfCommitmentDeadline,
+            a.jointAgency,
+            a.applicationOfJointOrganizations,
+            a.charge,
+            a.chargingStandard,
+            a.chargingBasis,
+            a.paymentMethod,
+            a.methodOfDeliveryOfApplicationMaterials,
+            a.onlineServiceSystem,
+            a.webSiteOfOnlineServiceSystem,
+            a.declarationAddressOfEnterpriseInvestmentProjects,
+            a.numberOfVisitsToTheFieldHall,
+            a.typeOfProcessingTimeOrPlace,
+            a.processingTime,
+            a.placeOfProcessing,
+            a.addendumToProcessingTimeOrPlace,
+            a.processingWindow,
+            a.quantitativeRestriction,
+            a.intermediaryService,
+            a.enquiry,
+            a.commonProblem,
+            a.theRightsAndObligationsOfTheApplicant,
+            a.acceptingConditions,
+            a.SettingBasis,
+            a.handlingBasis,
+            a.exerciseContent,
+            a.administrativeReconsiderationAdministrativeLitigation,
+            a.remarks,
+            a.consultationApproach,
+            a.advisoryAddress,
+            a.serviceSupportHotline,
+            a.complaintChannels,
+            a.complaintAddress,
+            a.itemSequencing,
+            a.materialSubmissionStatement,
+            a.acceptAndApprove,
+            a.timeLimitForAcceptance,
+            a.correctionOrCorrection,
+            a.timeLimitForCorrection,
+            a.acceptanceResult,
+            a.correctionOfResults,
+            a.refuseToAccept,
+            a.modeOfExamination,
+            a.reviewStandard,
+            a.examinationResult,
+            a.timeLimitRorReview,
+            a.decisionTimeLimit,
+            a.legalBasisAndDescriptionSpecial,
+            a.requiredTimeLimitSpecial,
+            a.statutoryCompletionTimeLimitSpecial,
+            a.chargeSpecial,
+            a.chargeBasisAndDescriptionSpecial,
+            a.processFlowChart,
+            a.processDescription,
+            a.resultType,
+            a.resultName,
+            a.resultSample,
+            a.numberOfAnnualOrAnnualReviews ,
+            a.serviceRoute,
+            a.materialApplication,
+            es.name AS eventStar,
+            a.sourceOfPower,
+            a.permissionDivision,
+            a.natureOfImplementingSubject,
+            a.exerciseHierarchy,
+            a.typeOfOffice,
+            a.annualExaminationOrAnnualInspection,
+            a.concierge,
+            a.scopeOfOperation,
+            a.handlingForm,
+            a.onlineApplicationForm,
+            a.appointmentProcessing,
+            a.prePublicationPublicity,
+            a.decidedToMakePublic,
+            c.departmentalMattersId,
+            td.title AS a_implementingOrgan,
+            c.natureOfImplementingSubject AS a_natureOfImplementingSubject,
+            c.implementingBody AS a_implementingBody,
+            c.typeOfOffice AS a_typeOfOffice,
+            c.jointAgency AS a_jointAgency,
+            c.applicationOfJointOrganizations AS a_applicationOfJointOrganizations,
+            c.supportOnlinePayment AS a_supportOnlinePayment,
+            c.isSupportLogistics AS a_isSupportLogistics,
+            c.onlineServiceSystem AS a_onlineServiceSystem,
+            c.webSiteOfOnlineServiceSystem AS a_webSiteOfOnlineServiceSystem,
+            c.declarationAddressOfEnterpriseInvestmentProjects AS a_declarationAddressOfEnterpriseInvestmentProjects,
+            c.handlingForm AS a_handlingForm,
+            c.onlineApplicationForm AS a_onlineApplicationForm,
+            c.processingTime AS a_processingTime,
+            c.placeOfProcessing AS a_placeOfProcessing,
+            c.processingWindow AS a_processingWindow,
+            c.appointmentProcessing AS a_appointmentProcessing,
+            c.enquiry AS a_enquiry,
+            c.advisoryPhone AS a_advisoryPhone,
+            c.serviceSupportHotline AS a_serviceSupportHotline,
+            c.advisoryAddress AS a_advisoryAddress,
+            c.complaintAddress AS a_complaintAddress,
+            c.deliversUserAndWindow AS a_deliversUserAndWindow
+        FROM business_guide_filing_one AS a
+        LEFT JOIN event_star es ON a.eventStar = es.code
+        LEFT JOIN departmental_matters dm ON dm.mappingId = a.eventId
+        LEFT JOIN events_table et ON dm.eventId = et.id
+        LEFT JOIN catalogue_event_type cet ON cet.code = et.eventType
+		LEFT JOIN events_table et1 ON et1.id = et.eventPid
+        LEFT JOIN departmental_matters dm1 ON dm1.eventId = et1.id
+        LEFT JOIN business_guide_filing_one_private c ON dm.id = c.departmentalMattersId
+        LEFT JOIN t_department td ON td.id = dm.deptId
+        LEFT JOIN central_business_guidance_department_code cbgd ON cbgd.id = td.central_departments
+        WHERE dm.id = #{eventId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByEventId" parameterType="java.lang.String" >
+        DELETE FROM  business_guide_filing_one WHERE eventId = (
+        SELECT mappingId FROM departmental_matters AS dm WHERE dm.id = #{eventId,jdbcType=VARCHAR})
+    </delete>
+</mapper>

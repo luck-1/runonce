@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runonce.dao.eventversionone.DefaultSystemDockingPicDao">
+
+    <resultMap id="DefaultSystemDockingPic" type="com.runonce.model.eventversionone.DefaultSystemDockingPic" >
+        <result column="id" property="id" />
+        <result column="index" property="index" />
+        <result column="dockingName" property="dockingName" />
+        <result column="dockingPicName" property="dockingPicName" />
+        <result column="remarks" property="remarks" />
+    </resultMap>
+    <select id="selectAllRecord" resultType="com.runonce.model.eventversionone.DefaultSystemDockingPic">
+        SELECT id,t.index,dockingName,dockingPicName,remarks FROM
+        default_system_docking_pic AS t
+        ORDER BY t.index ASC
+    </select>
+    <select id="selectByPrimaryKeyOvrride"
+            resultType="com.runonce.model.eventversionone.DefaultSystemDockingPic">
+        SELECT id,t.index,dockingName,dockingPicName,remarks FROM
+        default_system_docking_pic AS t
+        WHERE id = #{id}
+    </select>
+</mapper>
