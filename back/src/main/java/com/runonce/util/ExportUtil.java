@@ -16,7 +16,7 @@ import java.util.Map;
 public class ExportUtil {
 
     //map -> k,v反转
-    public static Map<String,String> recover(Map<String,Object> map){
+    public static Map<String,String> recover(final Map<String,Object> map){
         Iterator iterator = map.keySet().iterator();
         Map<String,String> map1 =new LinkedHashMap<>();
         while(iterator.hasNext()){
