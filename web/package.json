@@ -14,7 +14,7 @@
     "@antv/g6": "^1.2.8",
     "@toast-ui/vue-image-editor": "^1.0.1",
     "ali-oss": "^6.0.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "clipboard": "^2.0.4",
     "echarts": "^4.2.0-rc.2",
